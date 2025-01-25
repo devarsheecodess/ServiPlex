@@ -3,7 +3,6 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 const UserForm = () => {
-  const [role, setRole] = useState('User');
   const [form, setForm] = useState({id: uuidv4(), name: '', username: '', email: '', password: ''});
   
   const handleChange = (e) => {
@@ -126,7 +125,7 @@ const ProviderForm = () => {
           type="text"
           className="border-2 p-1 ml-3 rounded-md"
           name="owner"
-          value={form.ownerName}
+          value={form.owner}
           onChange={handleChange}
           required
         />
@@ -148,7 +147,7 @@ const ProviderForm = () => {
           type="text"
           className="border-2 p-1 ml-3 rounded-md"
           name="shop"
-          value={form.shopName}
+          value={form.shop}
           onChange={handleChange}
           required
         />
@@ -159,7 +158,7 @@ const ProviderForm = () => {
           type="tel"
           className="border-2 p-1 ml-3 rounded-md"
           name="phone"
-          value={form.phoneNumber}
+          value={form.phone}
           onChange={handleChange}
           required
         />
