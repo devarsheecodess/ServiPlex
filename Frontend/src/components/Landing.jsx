@@ -1,6 +1,13 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Landing = () => {
+function Landing() {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="absolute top-0 left-0 -z-20 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center p-4">
       {/* Navbar */}
@@ -24,12 +31,15 @@ const Landing = () => {
         <p className="text-lg text-gray-300 mb-6">
           Your one-stop solution for all your service needs.
         </p>
-        <button className="bg-green-500 text-black px-6 py-2 rounded-md text-base font-medium hover:bg-green-400 transition duration-300 shadow-md">
+        <button
+          className="bg-green-500 text-black px-6 py-2 rounded-md text-base font-medium hover:bg-green-400 transition duration-300 shadow-md"
+          onClick={() => handleNavigation("/signup")}
+        >
           Get Started
         </button>
       </div>
     </div>
   );
-};
+}
 
-export default Landing;
+export default Landing
