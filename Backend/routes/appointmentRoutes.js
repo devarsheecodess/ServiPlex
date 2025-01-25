@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const Appointment=require("../Models/appointmentModel");
-const mongoose = require('mongoose');
+const mongoose=require('mongoose')
 
 const appointments = [];    
 
@@ -19,32 +19,43 @@ router.get('/', async (req, res) => {
   
   router.post('/', async (req, res) => {
     const { serviceId, customerId, date, status } = req.body;
-  
-    // Convert customerId to a valid ObjectId
+
+    // Validate and convert customerId to a valid ObjectId
     let customerObjectId;
     try {
-      customerObjectId = mongoose.Types.ObjectId(customerId);
+        customerObjectId = new mongoose.Types.ObjectId(customerId); // Use 'new' for ObjectId
     } catch (err) {
-      return res.status(400).json({ error: 'Invalid customerId format', details: err.message });
+        return res.status(400).json({ error: 'Invalid customerId format', details: err.message });
     }
-  
+
+    // Create a new appointment
     const newAppointment = new Appointment({
-      serviceId: mongoose.Types.ObjectId(serviceId), // Assuming serviceId is also an ObjectId
-      customerId: customerObjectId,
-      date,
-      status: status || 'pending'
+        id: Date.now(),
+        serviceId,
+        customerId: customerObjectId, // Use the converted ObjectId
+        date,
+        status: status || 'pending'
     });
-  
+
     try {
-      // Save the appointment to the database
-      const savedAppointment = await newAppointment.save();
-      res.status(201).json(savedAppointment);  // Return the saved appointment
+        // Save the appointment to the database
+        const savedAppointment = await newAppointment.save();
+        res.status(201).json(savedAppointment);
     } catch (err) {
-      res.status(500).json({ error: 'Error saving appointment to the database', details: err.message });
+        res.status(500).json({ error: 'Error saving appointment to the database', details: err.message });
+    }
+});
+  
+  router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const appointment = appointments.find(a => a.id === parseInt(id));
+    if (appointment) {
+      appointment.status = status;
+      res.status(200).json(appointment);
+    } else {
+      res.status(404).json({ message: 'Appointment not found' });
     }
   });
-  
-  module.exports = router;
-  
 
 module.exports = router;
