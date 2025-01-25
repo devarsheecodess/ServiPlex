@@ -1,3 +1,8 @@
+const express = require('express');
+const app = express();
+const router = express.Router();
+
+
 app.get('/appointments', (req, res) => {
     res.status(200).json(appointments);
   });
@@ -20,3 +25,5 @@ app.get('/appointments', (req, res) => {
       res.status(404).json({ message: 'Appointment not found' });
     }
   });
+
+module.exports = router;
