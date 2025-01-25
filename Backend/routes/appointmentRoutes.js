@@ -45,16 +45,27 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Error saving appointment to the database', details: err.message });
     }
 });
+router.put('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
   
-  router.put('/:id', (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
-    const appointment = appointments.find(a => a.id === parseInt(id));
-    if (appointment) {
-      appointment.status = status;
-      res.status(200).json(appointment);
-    } else {
-      res.status(404).json({ message: 'Appointment not found' });
+      const updatedAppointment = await Appointment.findByIdAndUpdate(
+        id,
+        { status },
+        { new: true } // Returns the updated document
+      );
+  
+      if (!updatedAppointment) {
+        return res.status(404).json({ message: 'Appointment not found' });
+      }
+  
+      res.status(200).json(updatedAppointment);
+    } catch (err) {
+      res.status(500).json({ 
+        error: 'Error updating appointment status', 
+        details: err.message 
+      });
     }
   });
 
