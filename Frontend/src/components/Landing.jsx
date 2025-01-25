@@ -2,9 +2,7 @@ import React from 'react';
 
 const Landing = () => {
   return (
-    <div
-      className="bg-black h-screen w-screen relative flex  items-center justify-center overflow-hidden"
-    >
+    <div className="absolute top-0 left-0 -z-20 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center p-4">
       {/* Navbar */}
       <nav className="absolute top-0 left-0 w-full py-4 flex justify-between items-center px-6">
         {/* Serviplex logo on the left */}
@@ -14,9 +12,6 @@ const Landing = () => {
         <div className="space-x-4">
           <button className="bg-transparent text-white border border-white px-4 py-2 rounded-lg hover:bg-green-500 hover:text-black transition duration-300">
             Login
-          </button>
-          <button className="bg-transparent text-white border border-white px-4 py-2 rounded-lg hover:bg-green-500 hover:text-black transition duration-300">
-            Sign In
           </button>
         </div>
       </nav>
