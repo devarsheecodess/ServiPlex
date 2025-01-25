@@ -1,4 +1,7 @@
 // Appointment Model
+
+const mongoose = require('mongoose');
+
 const appointmentSchema = new mongoose.Schema({
     serviceId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,4 +1,6 @@
 // Review Model
+const mongoose = require('mongoose');
+
 const reviewSchema = new mongoose.Schema({
     serviceId: {
       type: mongoose.Schema.Types.ObjectId,

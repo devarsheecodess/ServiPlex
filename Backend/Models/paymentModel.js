@@ -1,4 +1,5 @@
 // Payment Model
+const mongoose = require('mongoose');
 const paymentSchema = new mongoose.Schema({
     providerId: {
       type: mongoose.Schema.Types.ObjectId,

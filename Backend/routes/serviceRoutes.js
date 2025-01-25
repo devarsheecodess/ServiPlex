@@ -5,9 +5,16 @@ const Service=require("../Models/serviceModel");
 const services = [];
 
 // Get all services
-router.get('/', (req, res) => {
-  res.status(200).json(services);
-});
+router.get('/', async (req, res) => {
+    try {
+      // Retrieve all services from the database
+      const services = await Service.find();  // Using Mongoose's find() method to get all documents
+  
+      res.status(200).json(services);  // Respond with the services data
+    } catch (err) {
+      res.status(500).json({ error: 'Error fetching services from the database', details: err.message });
+    }
+  });
 
 // Add a new service
 router.post('/', async (req, res) => {
