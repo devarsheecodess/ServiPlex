@@ -57,6 +57,26 @@ const Home = () => {
           <h2 className="text-2xl font-semibold text-white mb-2">User Profile</h2>
           <p className="text-sm text-green-500">Access and update your profile information effortlessly.</p>
         </div>
+        <div 
+          className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
+          onClick={() => window.location.href = '/payments'} 
+        >
+          <img src="https://cdn.pixabay.com/photo/2021/03/19/13/40/online-6107598_640.png" alt="Payments" className="w-28 h-28 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
+          <h2 className="text-2xl font-semibold text-white mb-2">Payments</h2>
+          <p className="text-sm text-green-500">Set up and manage your payment methods for services.</p>
+          <p className="text-sm text-green-500">Options to set payment methods, including accepting payments</p>
+          <p className="text-sm text-green-500">before or after service delivery.</p>
+        </div>
+
+        {/* Ratings and Reviews */}
+        <div 
+          className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
+          onClick={() => window.location.href = '/reviews'} 
+        >
+          <img src="https://www.irpcommerce.com/IRPStrategyCenter/Interface/DisplayImages/55.jpg" alt="Reviews" className="w-28 h-28 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
+          <h2 className="text-2xl font-semibold text-white mb-2">Reviews</h2>
+          <p className="text-sm text-green-500">View customer feedback and improve your services.</p>
+        </div>
       </div>
     </div>
 
