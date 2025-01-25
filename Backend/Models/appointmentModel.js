@@ -8,6 +8,9 @@ const appointmentSchema = new mongoose.Schema({
       ref: 'Service',
       required: true,
     },
+    providerId: {
+      type: String,
+    },
     customerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming a User model exists

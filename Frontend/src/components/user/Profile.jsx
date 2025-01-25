@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState({
-    email: 'johndoe@example.com',
-    username: 'johndoe',
-    name: 'John Doe',
-    password: '',
+    email: "johndoe@example.com",
+    username: "johndoe",
+    name: "John Doe",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -17,70 +17,82 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    console.log('Updated Details:', userDetails);
-    alert('Profile updated successfully!');
+    console.log("Updated Details:", userDetails);
+    alert("Profile updated successfully!");
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Edit Profile</h1>
-        <form className="space-y-4">
+    <div className="absolute top-0 left-0 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex items-center justify-center p-6">
+      <div className="bg-gray-900 bg-opacity-90 rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.9)] p-10 w-full max-w-xl backdrop-blur-lg">
+        <h1 className="text-4xl font-extrabold text-white mb-8 text-center">
+          Edit <span className="text-green-600">Profile</span>
+        </h1>
+        <form className="space-y-6">
           {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Email</label>
+          <div className="relative">
+            <label className="block text-sm font-medium text-gray-300">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               value={userDetails.email}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full p-4 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-green focus:outline-none text-white transition"
             />
           </div>
 
           {/* Username */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Username</label>
+          <div className="relative">
+            <label className="block text-sm font-medium text-gray-300">
+              Username
+            </label>
             <input
               type="text"
               name="username"
               value={userDetails.username}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full p-4 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-green focus:outline-none text-white transition"
             />
           </div>
 
           {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Name</label>
+          <div className="relative">
+            <label className="block text-sm font-medium text-gray-300">
+              Name
+            </label>
             <input
               type="text"
               name="name"
               value={userDetails.name}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full p-4 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-green focus:outline-none text-white transition"
             />
           </div>
 
           {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Password</label>
+          <div className="relative">
+            <label className="block text-sm font-medium text-gray-300">
+              Password
+            </label>
             <input
               type="password"
               name="password"
               value={userDetails.password}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full p-4 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-green focus:outline-none text-white transition"
             />
-            <small className="text-sm text-gray-500">Leave blank to keep your current password.</small>
+            <small className="block mt-2 text-sm text-gray-400">
+              Leave blank to keep your current password.
+            </small>
           </div>
 
           {/* Save Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <button
               type="button"
               onClick={handleSave}
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+              className="bg-green-600 text-white py-3 px-8 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transform transition-transform hover:scale-105"
             >
               Save Changes
             </button>

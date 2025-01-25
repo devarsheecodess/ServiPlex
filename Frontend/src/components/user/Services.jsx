@@ -53,7 +53,7 @@ const Services = () => {
           <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50">
             <div className="bg-[rgba(255,255,255,0.1)] backdrop-blur-lg border border-[rgba(255,255,255,0.2)] rounded-xl p-8 max-w-lg w-full text-white relative shadow-2xl">
               <button
-                className="absolute top-4 right-4 text-gray-300 hover:text-white text-xl"
+                className="absolute cursor-pointer outline-0 top-4 right-4 text-gray-300 hover:text-white text-xl"
                 onClick={() => setSelectedService(null)}
               >
                 ✖

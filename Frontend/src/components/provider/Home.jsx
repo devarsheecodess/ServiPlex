@@ -4,6 +4,7 @@ const Home = () => {
   const handleLogout = () => {
     const cf = confirm("are you sure you want to logout?")
     if(cf){
+      localStorage.clear();
       window.location.href = '/';
     }
   }

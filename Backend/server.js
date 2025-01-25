@@ -78,7 +78,7 @@ app.post('/user-login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    res.status(200).json({ message: 'Login successful', success: true });
+    res.status(200).json({ message: 'Login successful', success: true, id: user.id });
   } catch (error) {
     console.error('Error logging in user:', error);
     res.status(500).json({ message: 'Error logging in user', error });
@@ -100,7 +100,7 @@ app.post('/provider-login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    res.status(200).json({ message: 'Login successful', success: true });
+    res.status(200).json({ message: 'Login successful', success: true, id: provider.id });
   } catch (error) {
     console.error('Error logging in provider:', error);
     res.status(500).json({ message: 'Error logging in provider', error });
@@ -119,6 +119,8 @@ app.use('/services', serviceRoutes);
 
 // User routes
 const services = require('./routes/Services');
+const userAppointments = require('./routes/userAppointments');
 app.use('/providers', services); // Correct usage
+app.use('/userAppointments', userAppointments); // Correct usage
 
 app.listen(port, () => {`Server running on port ${port}`});

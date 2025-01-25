@@ -19,10 +19,12 @@ const Login = () => {
       }
 
       if (response1 && response1.status === 200) {
+        localStorage.setItem("userID", response1.data.id);
         alert("Login successful");
         window.location.href = "/user-home";
       } else if (response2 && response2.status === 200) {
         alert("Login successful");
+        localStorage.setItem("providerID", response2.data.id);
         window.location.href = "/provider-home";
       } else {
         alert("Invalid credentials");
