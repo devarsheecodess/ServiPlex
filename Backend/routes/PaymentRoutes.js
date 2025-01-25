@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 
-
 app.get('/payments', (req, res) => {
     res.status(200).json(payments);
   });

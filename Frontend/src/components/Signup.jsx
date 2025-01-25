@@ -103,7 +103,7 @@ const ProviderForm = () => {
     try {
       console.log(form);
       const response = await axios.post("http://localhost:3000/provider-signup", form);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Provider registered successfully!");
         setForm({
           id: uuidv4(),
@@ -125,7 +125,7 @@ const ProviderForm = () => {
   };
 
   return (
-    <form className="flex flex-col gap-5 bg-gray-900 p-6 rounded-lg shadow-md text-white">
+    <form className="flex flex-col gap-5 bg-gray-900 p-6 rounded-lg shadow-md text-white" method="POST">
       <h2 className="text-2xl font-bold text-blue-400 mb-4">Service Provider Sign-Up</h2>
       <div>
         <label className="block mb-1">Email</label>
@@ -217,6 +217,7 @@ const ProviderForm = () => {
       </div>
       <button
         type="submit"
+        onClick={handleSubmit}
         className="w-full bg-blue-500 text-black p-3 rounded-lg font-semibold hover:bg-blue-400 transition duration-300"
       >
         Submit

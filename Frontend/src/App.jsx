@@ -6,6 +6,10 @@ import Signup from "./components/Signup";
 import ProviderHome from "./components/provider/Home";
 import ServiceList from './components/provider/Servicelist';
 import UserHome from "./components/user/Home";
+import Services from "./components/user/Services";
+import Appointments from "./components/user/Appointments";
+import Recent from "./components/user/Recent";
+import Profile from './components/user/Profile';
 
 const router = createBrowserRouter([
   {
