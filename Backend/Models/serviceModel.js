@@ -2,6 +2,10 @@
 const mongoose = require('mongoose');
 
 const serviceSchema = new mongoose.Schema({
+  providerID: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -19,7 +23,7 @@ const serviceSchema = new mongoose.Schema({
     required: false, // Optional field
   },
   offers: {
-    type: [String],
+    type: String,
     required: false, // Optional field
   },
 }, { timestamps: true });
