@@ -51,7 +51,7 @@ const Recent = () => {
             {recentServices.map((service) => (
               <div
                 key={service.id}
-                className="bg-gray-900  w -full bg-opacity-90 p-6 rounded-lg shadow-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow flex flex-col sm:flex-row items-start sm:items-center justify-between"
+                className="bg-gray-800 bg-opacity-90 p-8 rounded-xl shadow-2xl hover:shadow-[0_0_25px_rgba(50,205,50,0.8)] transition-all transform hover:scale-105 flex flex-col sm:flex-row items-start sm:items-center justify-between"
               >
                 <div>
                   <h2 className="text-2xl font-bold text-white">
