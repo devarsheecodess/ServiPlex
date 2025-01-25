@@ -1,14 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const ServiceModal = ({ service, onClose, onSave }) => {
   const [formData, setFormData] = useState({
+    serviceID: uuidv4(),
+    providerID: localStorage.getItem("providerID") || "",
     name: "",
     description: "",
     price: "",
     offers: "",
-    image: null,
-    providerID: localStorage.getItem("providerID") || "",
   });
 
   const handleChange = (e) => {
@@ -22,32 +23,11 @@ const ServiceModal = ({ service, onClose, onSave }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create a new FormData object
-    const formDataToSend = new FormData();
-    
-    // Append each field to the FormData object
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("price", formData.price);
-    formDataToSend.append("offers", formData.offers);
-    
-    // Only append image if it exists
-    if (formData.image) {
-      formDataToSend.append("image", formData.image);
-    }
-    
-    formDataToSend.append("providerID", formData.providerID);
-
     try {
+      console.log("FormData:", formData);
       const response = await axios.post(
-        "http://localhost:3000/services",
-        formDataToSend,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data', // Important for file uploads
-          },
-        }
+        "http://localhost:3000/addServices",
+        formData
       );
 
       if (response.status === 201) {
@@ -116,17 +96,6 @@ const ServiceModal = ({ service, onClose, onSave }) => {
               value={formData.offers}
               onChange={handleChange}
               required
-              className="w-full p-3 bg-[rgba(255,255,255,0.1)] text-white border border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-105 transition-transform"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-semibold text-white mb-1">
-              Image
-            </label>
-            <input
-              type="file"
-              name="image"
-              onChange={handleChange}
               className="w-full p-3 bg-[rgba(255,255,255,0.1)] text-white border border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-105 transition-transform"
             />
           </div>
