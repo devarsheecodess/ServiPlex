@@ -60,7 +60,38 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-  
+  {
+    path: "/services",
+    element: (
+      <div>
+        <Services />
+      </div>
+    ),
+  },
+  {
+    path: "/appointments",
+    element: (
+      <div>
+        <Appointments />
+      </div>
+    ),
+  },
+  {
+    path: "/recent",
+    element: (
+      <div>
+        <Recent />
+      </div>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <div>
+        <Profile />
+      </div>
+    ),
+  },
 ]);
 
 function App() {
