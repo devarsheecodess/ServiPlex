@@ -4,6 +4,7 @@ import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProviderHome from "./components/provider/Home";
+import ServiceList from './components/provider/Servicelist';
 import UserHome from "./components/user/Home";
 
 const router = createBrowserRouter([
@@ -47,6 +48,15 @@ const router = createBrowserRouter([
       </div>
     ),
   },
+  {
+    path: "/service-catalogue",
+    element: (
+      <div>
+        <ServiceList />
+      </div>
+    ),
+  },
+  
 ]);
 
 function App() {
