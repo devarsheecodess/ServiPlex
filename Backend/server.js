@@ -106,13 +106,16 @@ app.post('/provider-login', async (req, res) => {
     res.status(500).json({ message: 'Error logging in provider', error });
   }
 });
-const serviceRoutes = require('./routes/serviceRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 // Use routes
-app.use('/services', serviceRoutes);
+const serviceRoutes = require('./routes/serviceRoutes');
+app.use('/services', serviceRoutes); // Correct usage
+
 app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/reviews', reviewRoutes);
+
+app.listen(port, () => {`Server running on port ${port}`});

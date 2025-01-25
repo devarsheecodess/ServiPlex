@@ -1,3 +1,8 @@
+const express = require('express');
+const app = express();
+const router = express.Router();
+
+
 app.get('/payments', (req, res) => {
     res.status(200).json(payments);
   });
@@ -20,3 +25,5 @@ app.get('/payments', (req, res) => {
       res.status(404).json({ message: 'Payment not found' });
     }
   });
+
+module.exports = router;
