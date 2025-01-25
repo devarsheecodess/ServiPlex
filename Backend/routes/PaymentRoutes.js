@@ -1,3 +1,6 @@
+const express = require('express');
+const app = express();
+
 app.get('/payments', (req, res) => {
     res.status(200).json(payments);
   });

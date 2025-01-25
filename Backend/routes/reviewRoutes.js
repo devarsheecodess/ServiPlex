@@ -1,3 +1,6 @@
+const express = require('express');
+const app = express();
+
 app.get('/reviews/:serviceId', (req, res) => {
     const { serviceId } = req.params;
     const serviceReviews = reviews.filter(r => r.serviceId === parseInt(serviceId));
