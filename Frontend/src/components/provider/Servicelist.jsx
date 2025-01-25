@@ -3,10 +3,7 @@ import ServiceModal from "./Addservice";
 import DeleteConfirmation from "./DeleteConfirm";
 
 const ServiceList = () => {
-  const [services, setServices] = useState([
-    { id: 1, name: "Pipe Repair", description: "Fix broken pipes", price: 200 },
-    { id: 2, name: "Electrical Wiring", description: "Install new wiring", price: 500 },
-  ]);
+  const [services, setServices] = useState([]);
 
   const [selectedService, setSelectedService] = useState(null); // For editing
   const [showModal, setShowModal] = useState(false);
@@ -26,11 +23,29 @@ const ServiceList = () => {
     setSelectedService(null);
   };
 
+  const fetchServices = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/services");
+      const data = await response.json();
+      setServices(data);
+    } catch (err) {
+      console.error("Error fetching services:", err);
+    }
+  };
+
   // Handle delete
-  const confirmDelete = () => {
-    setServices((prev) => prev.filter((service) => service.id !== deleteServiceId));
-    setShowDeletePrompt(false);
-    setDeleteServiceId(null);
+  const confirmDelete = async (id) => {
+    try{
+      const response = await fetch(`http://localhost:3000/services`, {
+        id: id,
+      });
+      if(response.ok){
+        setShowDeletePrompt(false);
+        setDeleteServiceId(null);
+      }
+    } catch(error){
+      console.error("Error deleting service:", error);
+    }
   };
 
   const cancelDelete = () => {
@@ -51,6 +66,8 @@ const ServiceList = () => {
     return () => {
       document.head.removeChild(link);
     };
+
+    fetchServices();
   }, []);
 
   return (
