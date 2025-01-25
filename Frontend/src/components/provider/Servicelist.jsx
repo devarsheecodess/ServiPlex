@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ServiceModal from "./Addservice";
 import DeleteConfirmation from "./DeleteConfirm";
 
@@ -38,6 +38,21 @@ const ServiceList = () => {
     setDeleteServiceId(null);
   };
 
+  // Dynamically add FontAwesome CDN link to the document head
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
+    link.integrity = "sha384-2nmw+gkH7o7pK1CBhA3FThQxO+8Z5fFlW6UOcegk0kEKrjA4NJkfk1W+tTzYibc0";
+    link.crossOrigin = "anonymous";
+    document.head.appendChild(link);
+
+    // Cleanup the link on component unmount
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
   return (
     <div className="absolute top-0 left-0 w-full h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-8">
       <div className="bg-neutral-900 text-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl">
@@ -47,7 +62,7 @@ const ServiceList = () => {
             className="px-4 py-2 bg-green-500 rounded-lg text-black font-bold hover:bg-green-400 transition duration-300"
             onClick={() => setShowModal(true)}
           >
-            Add Service
+         <i class="fa-solid fa-plus text-white"></i>
           </button>
         </div>
 
@@ -75,7 +90,7 @@ const ServiceList = () => {
                       setShowModal(true);
                     }}
                   >
-                    Edit
+                  <i class="fa-solid fa-pen text-yellow-400"></i>
                   </button>
                   <button
                     className="px-3 py-1 bg-red-500 text-black rounded hover:bg-red-400 transition duration-200"
@@ -84,7 +99,7 @@ const ServiceList = () => {
                       setShowDeletePrompt(true);
                     }}
                   >
-                    Delete
+                    <i class="fa-solid fa-trash text-black"></i>
                   </button>
                 </td>
               </tr>

@@ -19,9 +19,11 @@ const serviceSchema = new mongoose.Schema({
     required: false, // Optional field
   },
   offers: {
-    type: String,
+    type: [String],
     required: false, // Optional field
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Service', serviceSchema);
+const Service = mongoose.model('Service', serviceSchema);
+
+module.exports = Service;
