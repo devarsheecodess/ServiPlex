@@ -111,7 +111,7 @@ const Appointment = () => {
                   className="px-4 py-2 bg-green-500 text-black rounded-lg"
                   onClick={() => handleAccept(selectedAppointment)}
                 >
-                  Accept
+                 <i class="fa-solid fa-check  text-black"></i>
                 </button>
                 <button
                   className="px-4 py-2 bg-red-500 text-white rounded-lg"

@@ -8,6 +8,7 @@ import ServiceList from './components/provider/Servicelist';
 import UserHome from "./components/user/Home";
 import Services from "./components/user/Services";
 import Appointments from "./components/user/Appointments";
+import Appointment from './components/provider/Appointment';
 import Recent from "./components/user/Recent";
 import Profile from './components/user/Profile';
 
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ServiceList />
+      </div>
+    ),
+  },
+  {
+    path: "/appointment",
+    element: (
+      <div>
+        <Appointment />
       </div>
     ),
   },

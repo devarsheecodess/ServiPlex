@@ -28,7 +28,7 @@ const Home = () => {
         {/* Appointment Management */}
         <div 
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/appointments'} 
+          onClick={() => window.location.href = '/appointment'} 
         >
           <img src="https://img.freepik.com/free-vector/appointment-booking-with-smartphone_23-2148554313.jpg?t=st=1737795212~exp=1737798812~hmac=170ee73427903d20ef2b7805fe009a2741df84ff536081085d7b9df65cf0d16e&w=740" alt="Appointments" className="w-28 h-28  border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">Appointments</h2>
