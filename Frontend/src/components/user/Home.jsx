@@ -7,7 +7,7 @@ const Home = () => {
         {/* Services */}
         <div
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/service-catalogue'}
+          onClick={() => window.location.href = '/services'}
         >
           <img src="https://banner2.cleanpng.com/20180423/ykw/avecjmkwe.webp" alt="Service Catalogue" className="w-20 h-20 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">Services</h2>
@@ -28,7 +28,7 @@ const Home = () => {
         {/* Recent Services */}
         <div
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/payments'}
+          onClick={() => window.location.href = '/recent'}
         >
           <img src="https://cdn.pixabay.com/photo/2021/03/19/13/40/online-6107598_640.png" alt="Payments" className="w-20 h-20 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">Recent Services</h2>
@@ -38,7 +38,7 @@ const Home = () => {
         {/* User Profile */}
         <div
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/reviews'}
+          onClick={() => window.location.href = '/profile'}
         >
           <img src="https://www.irpcommerce.com/IRPStrategyCenter/Interface/DisplayImages/55.jpg" alt="Reviews" className="w-20 h-20 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">User Profile</h2>
