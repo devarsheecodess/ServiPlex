@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProviderHome from "./components/provider/Home";
 import ServiceList from './components/provider/Servicelist';
+import Appointment from './components/provider/Appointment';
 import UserHome from "./components/user/Home";
 
 const router = createBrowserRouter([
@@ -56,7 +57,14 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-  
+  {
+    path: "//appointments",
+    element: (
+      <div>
+        <Appointment />
+      </div>
+    ),
+  },
 ]);
 
 function App() {
