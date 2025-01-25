@@ -4,9 +4,8 @@ import 'swiper/css';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(0);
-  const [role, setRole] = useState(''); // Store user role
+  const [reply, setReply] = useState('');
+  const [selectedReviewId, setSelectedReviewId] = useState(null);
 
   // Simulate fetching reviews
   useEffect(() => {
@@ -51,55 +50,59 @@ const Reviews = () => {
     fetchReviews();
   }, []);
 
-  // Submit user review
-  const handleSubmit = () => {
-    const newReview = {
-      id: reviews.length + 1,
-      provider: 'New Provider',
-      userComment: comment,
-      rating: rating,
-      providerResponse: '',
-      date: new Date().toISOString(),
-    };
-    setReviews([...reviews, newReview]);
-    setComment('');
-    setRating(0);
-    alert('Review submitted!');
+  // Handle provider reply
+  const handleReplySubmit = () => {
+    const updatedReviews = reviews.map((review) => {
+      if (review.id === selectedReviewId) {
+        return { ...review, providerResponse: reply };
+      }
+      return review;
+    });
+    setReviews(updatedReviews);
+    setReply('');
+    setSelectedReviewId(null);
+    alert('Reply submitted!');
   };
 
   return (
     <div className="absolute w-full top-0 left-0 h-full bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
       <div className="max-w-4xl mx-auto bg-transparent p-6 rounded-lg shadow-xl">
-        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">User Reviews</h1>
+        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">Provider Responses</h1>
 
-
-          <div className="submit-review text-white mb-6">
-            <textarea
-              placeholder="Write your review here"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows="2"
-              className="w-full p-4 border-2 border-gray-300 rounded-lg mb-4"
-            />
-            <div className="rating mb-4">
-              <span className="text-lg">Rating:</span>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  className={`text-2xl cursor-pointer ${rating >= star ? 'text-yellow-500' : 'text-gray-400'}`}
-                  onClick={() => setRating(star)}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-            <button
-              onClick={handleSubmit}
-              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow"
-            >
-              Submit Review
-            </button>
+        <div className="provider-reply-section text-white">
+          <h2 className="text-2xl mb-4">Provider, please select a review to respond to:</h2>
+          <div className="reviews-list mb-6">
+            {reviews.map((review) => (
+              <div
+                key={review.id}
+                className="bg-gray-900 p-4 rounded-lg mb-4"
+                onClick={() => setSelectedReviewId(review.id)}
+              >
+                <h3 className="text-xl text-green-600">{review.provider}</h3>
+                <p>{review.userComment}</p>
+                {review.providerResponse && <p><strong>Response:</strong> {review.providerResponse}</p>}
+              </div>
+            ))}
           </div>
+
+          {selectedReviewId && (
+            <div className="reply-form">
+              <textarea
+                placeholder="Write your reply here"
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                rows="3"
+                className="w-full p-4 border-2 border-gray-300 rounded-lg mb-4"
+              />
+              <button
+                onClick={handleReplySubmit}
+                className="px-6 py-2 bg-yellow-600 text-white rounded-lg"
+              >
+                Submit Reply
+              </button>
+            </div>
+          )}
+        </div>
 
         <h2 className="text-2xl font-semibold text-green-600 mb-2">All Reviews</h2>
         <Swiper
