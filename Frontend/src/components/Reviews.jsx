@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import { Navigation } from 'swiper'; // Importing Navigation module
+import 'swiper/css'; // Corrected import for Swiper styles
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -11,6 +10,7 @@ const Reviews = () => {
   // Simulate fetching reviews
   useEffect(() => {
     const fetchReviews = async () => {
+      // Mock data for now
       const mockReviews = [
         {
           id: 1,
@@ -55,7 +55,7 @@ const Reviews = () => {
   const handleSubmit = () => {
     const newReview = {
       id: reviews.length + 1,
-      provider: 'New Provider',
+      provider: 'New Provider', // Replace with dynamic provider info
       userComment: comment,
       rating: rating,
       providerResponse: '',
@@ -67,15 +67,10 @@ const Reviews = () => {
     alert('Review submitted!');
   };
 
-  // Delete a review
-  const handleDelete = (id) => {
-    setReviews(reviews.filter(review => review.id !== id));
-  };
-
   return (
     <div className="absolute w-full top-0 left-0 h-full bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
       <div className="max-w-4xl mx-auto bg-transparent p-6 rounded-lg shadow-xl">
-        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">Your Reviews</h1>
+        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">User Reviews</h1>
 
         <div className="submit-review text-white mb-6">
           <textarea
@@ -106,7 +101,6 @@ const Reviews = () => {
         </div>
 
         <h2 className="text-2xl font-semibold text-green-600 mb-2">All Reviews</h2>
-
         <Swiper
           spaceBetween={30}
           slidesPerView={1}
@@ -115,11 +109,6 @@ const Reviews = () => {
             delay: 5000,
             disableOnInteraction: false,
           }}
-          navigation={{
-            nextEl: '.swiper-button-next', // Link to the next button
-            prevEl: '.swiper-button-prev', // Link to the previous button
-          }}
-          modules={[Navigation]} // Add Navigation module
           className="reviews-swiper"
         >
           {reviews.map((review) => (
@@ -141,26 +130,10 @@ const Reviews = () => {
                     <p>{review.providerResponse}</p>
                   </div>
                 )}
-
-                {/* Delete Button */}
-                <button
-                  onClick={() => handleDelete(review.id)}
-                  className="mt-4 text-red-500 hover:text-red-700 text-lg"
-                >
-                  Delete Review
-                </button>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Custom navigation buttons */}
-        <div className="swiper-button-next text-3xl text-white absolute top-1/2 right-0 transform -translate-y-1/2">
-          ➡
-        </div>
-        <div className="swiper-button-prev text-3xl text-white absolute top-1/2 left-0 transform -translate-y-1/2">
-          ⬅
-        </div>
       </div>
     </div>
   );
