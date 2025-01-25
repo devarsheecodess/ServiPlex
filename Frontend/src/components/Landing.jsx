@@ -9,20 +9,24 @@ function Landing() {
   };
 
   return (
-    <div className="absolute top-0 left-0 -z-20 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center p-4">
+    <div
+     className="absolute top-0 left-0  w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-4"
+    >
       {/* Navbar */}
-      <nav className="absolute top-0 left-0 w-full py-4 flex justify-between items-center px-6">
+      <nav className="absolute top-0  w-full py-4 flex justify-between items-center px-6">
         {/* Serviplex logo on the left */}
         <h1 className="text-white text-2xl font-extrabold">Serviplex</h1>
 
         {/* Buttons on the right */}
-        <div className="space-x-4">
-          <button className="bg-transparent text-white border border-white px-4 py-2 rounded-lg hover:bg-green-500 hover:text-black transition duration-300">
+
+          <div className="space-x-4">
+          <button className="bg-transparent text-white border border-white px-4 py-2 rounded-lg hover:bg-green-500 hover:text-black transition duration-300"
+           onClick={() => handleNavigation("/login")}>
             Login
           </button>
-          onClick={() => handleNavigation("/login")}
         </div>
       </nav>
+    
 
       {/* Main Content */}
       <div className="text-center mt-20">
