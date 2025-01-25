@@ -7,6 +7,7 @@ const Home = () => {
   const handleLogout = () => {
     const cf = confirm("are you sure you want to logout?")
     if(cf){
+      localStorage.clear();
       navigate('/');
     }
   }
@@ -14,7 +15,7 @@ const Home = () => {
   return (
     <div className="absolute top-0 left-0 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-4">
         <h1 className="text-4xl font-extrabold text-blue-600 mb-8">User Dashboard</h1>
-      <button className="text-white text-xl cursor-pointer p-5 absolute top-5 right-5" onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i></button>
+      <button className="text-white text-xl cursor-pointer outline-0 p-5 absolute top-5 right-5" onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i></button>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl w-full">
         {/* Services */}
         <div
