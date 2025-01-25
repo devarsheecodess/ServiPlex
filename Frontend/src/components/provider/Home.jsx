@@ -51,7 +51,7 @@ const Home = () => {
         {/* Ratings and Reviews */}
         <div 
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/reviews'} 
+          onClick={() => window.location.href = '/replies'} 
         >
           <img src="https://www.irpcommerce.com/IRPStrategyCenter/Interface/DisplayImages/55.jpg" alt="Reviews" className="w-28 h-28 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">Reviews</h2>
