@@ -5,8 +5,6 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProviderHome from "./components/provider/Home";
 import ServiceList from './components/provider/Servicelist';
-
-// User pages
 import UserHome from "./components/user/Home";
 import Services from "./components/user/Services";
 import Appointments from "./components/user/Appointments";
@@ -62,38 +60,7 @@ const router = createBrowserRouter([
       </div>
     ),
   },
-  {
-    path: "/services",
-    element: (
-      <div>
-        <Services />
-      </div>
-    ),
-  },
-  {
-    path: "/appointments",
-    element: (
-      <div>
-        <Appointments />
-      </div>
-    ),
-  },
-  {
-    path: "/recent",
-    element: (
-      <div>
-        <Recent />
-      </div>
-    ),
-  },
-  {
-    path: "/profile",
-    element: (
-      <div>
-        <Profile />
-      </div>
-    ),
-  },
+  
 ]);
 
 function App() {
