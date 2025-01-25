@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ServiceModal from "./ServiceModal";
-import DeleteConfirmation from "./DeleteConfirmation";
+import ServiceModal from "./Addservice";
+import DeleteConfirmation from "./DeleteConfirm";
 
 const ServiceList = () => {
   const [services, setServices] = useState([

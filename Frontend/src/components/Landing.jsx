@@ -20,7 +20,7 @@ function Landing() {
           <button className="bg-transparent text-white border border-white px-4 py-2 rounded-lg hover:bg-green-500 hover:text-black transition duration-300">
             Login
           </button>
-          onClick={() => handleNavigation("/Login")}
+          onClick={() => handleNavigation("/login")}
         </div>
       </nav>
 
