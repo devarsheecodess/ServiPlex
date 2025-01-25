@@ -109,13 +109,16 @@ app.post('/provider-login', async (req, res) => {
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
-
-// Use routes
 const serviceRoutes = require('./routes/serviceRoutes');
-app.use('/services', serviceRoutes); // Correct usage
+
 
 app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/services', serviceRoutes);
+
+// User routes
+const services = require('./routes/Services');
+app.use('/providers', services); // Correct usage
 
 app.listen(port, () => {`Server running on port ${port}`});

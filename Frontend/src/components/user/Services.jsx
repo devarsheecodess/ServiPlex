@@ -7,42 +7,14 @@ const Services = () => {
   useEffect(() => {
     // Simulated data fetch for services
     const fetchServices = async () => {
-      const mockData = [
-        {
-          id: 1,
-          name: 'Urban Barbers',
-          rating: 4.5,
-          location: '456 Elm Street, Los Angeles, CA',
-          phone: '+1 123-456-7890',
-          image: 'https://example.com/barber.jpg',
-        },
-        {
-          id: 2,
-          name: 'Fix-It Plumbers',
-          rating: 4.2,
-          location: '123 Main Street, New York, NY',
-          phone: '+1 234-567-8901',
-          image: 'https://example.com/plumber.jpg',
-        },
-        {
-          id: 3,
-          name: 'Glow Beauty Salon',
-          rating: 4.8,
-          location: '789 Pine Street, Miami, FL',
-          phone: '+1 345-678-9012',
-          image: 'https://example.com/beauty.jpg',
-        },
-        {
-          id: 4,
-          name: 'Electrician Experts',
-          rating: 4.3,
-          location: '321 Oak Avenue, Austin, TX',
-          phone: '+1 456-789-0123',
-          image: 'https://example.com/electrician.jpg',
-        },
-      ];
-      setServices(mockData);
-    };
+        try{
+            const response = await fetch('http://localhost:3000/providers');
+            const data = await response.json();
+            setServices(data);
+        }catch(error){
+            console.log("Error: ", error);
+        }
+    }
 
     fetchServices();
   }, []);
@@ -61,15 +33,15 @@ const Services = () => {
               onClick={() => setSelectedService(service)}
             >
               <img
-                src={service.image}
-                alt={service.name}
+                src={service.logo}
+                alt={service.profession}
                 className="w-full h-40 object-cover"
               />
               <div className="p-4">
-                <h2 className="text-xl font-semibold text-gray-800">{service.name}</h2>
-                <p className="text-gray-600 text-sm mb-2">{service.location}</p>
+                <h2 className="text-xl font-semibold text-gray-800">{service.shop}</h2>
+                <p className="text-gray-600 text-sm mb-2">{service.address}</p>
                 <p className="text-yellow-500 text-sm font-medium">
-                  ⭐ {service.rating} / 5.0
+                  ⭐ / 5.0
                 </p>
               </div>
             </div>
@@ -86,14 +58,14 @@ const Services = () => {
               >
                 ✖
               </button>
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">{selectedService.name}</h2>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">{selectedService.shop}</h2>
               <img
-                src={selectedService.image}
-                alt={selectedService.name}
+                src={selectedService.logo}
+                alt={selectedService.shop}
                 className="w-full h-40 object-cover rounded-lg mb-4"
               />
               <p className="text-gray-600 mb-2">
-                <strong>Location:</strong> {selectedService.location}
+                <strong>Location:</strong> {selectedService.address}
               </p>
               <p className="text-gray-600 mb-4">
                 <strong>Phone:</strong> {selectedService.phone}
@@ -101,7 +73,7 @@ const Services = () => {
               <button
                 className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
                 onClick={() => {
-                  alert(`Booking appointment for ${selectedService.name}`);
+                  alert(`Booking appointment for ${selectedService.shop}`);
                   setSelectedService(null);
                 }}
               >
