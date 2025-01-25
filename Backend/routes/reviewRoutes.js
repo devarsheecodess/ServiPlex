@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 
 app.get('/reviews/:serviceId', (req, res) => {
     const { serviceId } = req.params;
@@ -13,4 +14,5 @@ app.get('/reviews/:serviceId', (req, res) => {
     reviews.push(newReview);
     res.status(201).json(newReview);
   });
-  
+
+    module.exports = router;
