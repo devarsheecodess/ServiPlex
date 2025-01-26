@@ -50,11 +50,11 @@ const ProviderPaymentSetup = () => {
 
   return (
     <div className="absolute top-0 left-0 w-full h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-8">
-      <div className="bg-neutral-900 text-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl">
-        <h2 className="text-2xl font-extrabold text-green-400 mb-6">Payment Setup</h2>
+      <div className="bg-neutral-900 border-2 border-yellow-600 text-yellow-400 w-full max-w-4xl p-8 rounded-2xl shadow-2xl ">
+        <h2 className="text-2xl font-extrabold text-green-600 mb-6">Payment Setup</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="providerId" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="providerId" className="block text-sm font-medium text-green-600">
               Provider ID
             </label>
             <input
@@ -63,13 +63,13 @@ const ProviderPaymentSetup = () => {
               id="providerId"
               value={formData.providerId}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-yellow-600 rounded-md "
               required
             />
           </div>
 
           <div>
-            <label htmlFor="upiId" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="upiId" className="block text-sm font-medium text-green-600">
               UPI ID
             </label>
             <input
@@ -78,7 +78,7 @@ const ProviderPaymentSetup = () => {
               id="upiId"
               value={formData.upiId}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-yellow-600 rounded-md"
               required
             />
           </div>
@@ -86,7 +86,7 @@ const ProviderPaymentSetup = () => {
           <div>
             <label
               htmlFor="bankAccountNumber"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-green-600"
             >
               Bank Account Number
             </label>
@@ -96,13 +96,13 @@ const ProviderPaymentSetup = () => {
               id="bankAccountNumber"
               value={formData.bankAccountNumber}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-yellow-600 rounded-md"
               required
             />
           </div>
 
           <div>
-            <label htmlFor="ifscCode" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="ifscCode" className="block text-sm font-medium text-green-600">
               IFSC Code
             </label>
             <input
@@ -111,7 +111,7 @@ const ProviderPaymentSetup = () => {
               id="ifscCode"
               value={formData.ifscCode}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-yellow-600 rounded-md"
               required
             />
           </div>
@@ -119,7 +119,7 @@ const ProviderPaymentSetup = () => {
           <div>
             <label
               htmlFor="accountHolderName"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-green-600"
             >
               Account Holder Name
             </label>
@@ -129,21 +129,21 @@ const ProviderPaymentSetup = () => {
               id="accountHolderName"
               value={formData.accountHolderName}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-yellow-600 rounded-md"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            className="w-full bg-blue-500 text-yellow-600 p-2 rounded-md hover:bg-blue-600 "
           >
-            Save Payment Details
+            save payment details
           </button>
         </form>
 
         {responseMessage && (
-          <p className="mt-4 text-center text-sm text-gray-700">{responseMessage}</p>
+          <p className="mt-4 text-center text-sm text-green-600">{responseMessage}</p>
         )}
       </div>
     </div>
