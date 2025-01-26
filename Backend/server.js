@@ -151,9 +151,10 @@ app.put('/profile', async (req, res) => {
 });
 
 const appointmentRoutes = require('./routes/appointmentRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+const paymentRoutes = require('./routes/PaymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const providerPay=require('./routes/providerpay')
 
 const Service = require('./Models/serviceModel')
 
@@ -162,6 +163,7 @@ app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/services', serviceRoutes);
+app.use('/providerPay',providerPay);
 
 // User routes
 const services = require('./routes/Services');
