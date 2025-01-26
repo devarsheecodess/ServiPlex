@@ -28,7 +28,7 @@ const Recent = () => {
     <div className="absolute w-full top-0 left-0 h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-extrabold text-green-600 mb-10 text-center tracking-tight">
-          Your Appointments
+          Recent Appointments
         </h1>
 
         {appointments.length > 0 ? (

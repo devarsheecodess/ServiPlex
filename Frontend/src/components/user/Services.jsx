@@ -84,7 +84,7 @@ const Services = () => {
               className="bg-[rgba(255,255,255,0.1)] backdrop-blur-lg border border-[rgba(255,255,255,0.2)] rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 cursor-pointer"
             >
               <img
-                src={service.logo}
+                src={service.logo || "https://demofree.sirv.com/nope-not-here.jpg"}
                 alt={service.profession}
                 className="w-full h-48 object-cover rounded-t-2xl"
               />
