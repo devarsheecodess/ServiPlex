@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Appointments = () => {
   // Sample data for appointments
   const [appointments, setAppointments] = useState([]);
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
 
   useEffect(() => {
     // Simulate fetching data from an API
     const fetchData = async () => {
-      const mockData = [
-        {
-          id: 1,
-          shopName: "Glow Beauty Salon",
-          date: "2025-01-30",
-          time: "3:00 PM",
-          address: "123 Main Street, New York, NY",
-          paymentPrice: "$50",
-        },
-        {
-          id: 2,
-          shopName: "Urban Barbers",
-          date: "2025-02-05",
-          time: "10:30 AM",
-          address: "456 Elm Street, Los Angeles, CA",
-          paymentPrice: "$30",
-        },
-      ];
-      setAppointments(mockData);
+      try {
+        const response = await axios.get("http://localhost:3000/userAppointments", {
+          params: {
+            customerId: userID,
+            status: 'pending' 
+          }
+        });
+        setAppointments(response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
     };
-
+    
     fetchData();
   }, []);
 
@@ -45,26 +39,30 @@ const Appointments = () => {
                 key={appointment.id}
                 className="bg-gray-800 bg-opacity-90 p-8 rounded-xl shadow-2xl hover:shadow-[0_0_25px_rgba(50,205,50,0.8)] transition-all transform hover:scale-105 flex flex-col sm:flex-row items-start sm:items-center justify-between"
               >
-                <div>
-                  <h2 className="text-2xl font-bold text-white tracking-tight">
-                    {appointment.shopName}
-                  </h2>
-                  <p className="text-sm text-gray-400 mt-1">{appointment.address}</p>
-                  <p className="mt-3 text-sm text-gray-300">
-                    Date:{" "}
-                    <span className="font-medium text-green-600">
-                      {appointment.date}
-                    </span>
-                  </p>
-                  <p className="text-sm text-gray-300">
-                    Time:{" "}
-                    <span className="font-medium text-gray-200">
-                      {appointment.time}
-                    </span>
-                  </p>
-                </div>
-                <div className="mt-6 sm:mt-0 sm:ml-8">
-                  <p className="text-2xl font-bold text-green-600">{appointment.paymentPrice}</p>
+                <div className="flex flex-col sm:flex-row sm:justify-between w-full">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white tracking-tight">
+                      {appointment.shop}
+                    </h2>
+                    <p className="text-sm text-gray-400 mt-1">{appointment.address}</p>
+                    <p className="mt-3 text-sm text-gray-300">
+                      Date:{" "}
+                      <span className="font-medium text-green-600">
+                        {appointment.date.slice(0, 10)}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="mt-6 sm:mt-0 sm:ml-8 flex flex-col items-end">
+                    <p className="text-2xl font-bold text-green-600">
+                      {appointment.paymentPrice}
+                    </p>
+                    <p className="text-sm text-gray-300">
+                      Bill:{" "}
+                      <span className="font-medium text-gray-200">
+                        ₹ {appointment.price}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -74,6 +72,7 @@ const Appointments = () => {
             No appointments booked yet.
           </p>
         )}
+
       </div>
     </div>
   );

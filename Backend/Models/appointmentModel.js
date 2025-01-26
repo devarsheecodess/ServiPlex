@@ -3,17 +3,23 @@
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
-    serviceId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Service',
-      required: true,
-    },
     providerId: {
       type: String,
     },
     customerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Assuming a User model exists
+      type: String,
+      required: true,
+    },
+    shop: {
+      type: String,
+      required: true,
+    },
+    services:{
+      type: Array,
+      required: true,
+    },
+    price:{
+      type: Number,
       required: true,
     },
     date: {

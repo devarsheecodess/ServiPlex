@@ -128,6 +128,13 @@ const ServiceList = () => {
                 </td>
               </tr>
             ))}
+            {
+              services.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="py-2 text-center text-white">No services available</td>
+                </tr>
+              )
+            }
           </tbody>
         </table>
 
