@@ -49,6 +49,7 @@ const Services = () => {
       const appointmentDetails = {
         providerId: selectedService.id,
         customerId: localStorage.getItem("userID"),
+        customerName: localStorage.getItem("name"),
         shop: selectedService.shop,
         services: order,
         price: order.reduce((acc, item) => acc + item.price, 0),
