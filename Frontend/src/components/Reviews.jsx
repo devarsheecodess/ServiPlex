@@ -94,9 +94,9 @@ const Reviews = () => {
             name="provider"
             onChange={handleChange}
           >
-            <option value="" className='text-yellow-600' disabled selected>Select the Provider</option>
+            <option value="" className='bg-gray-900 text-white-600' disabled selected>Select the Provider</option>
             {providers.map((provider) => (
-              <option key={provider.id} value={provider.shop} className='text-yellow-600'>{provider.shop}</option>
+              <option key={provider.id} value={provider.shop} className='bg-gray-900 text-yellow-600'>{provider.shop}</option>
             ))}
           </select>
 
