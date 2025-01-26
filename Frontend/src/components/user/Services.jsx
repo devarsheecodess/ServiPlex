@@ -121,7 +121,7 @@ const Services = () => {
               </button>
               <h2 className="text-3xl font-semibold text-cyan-400 mb-6">{selectedService.shop}</h2>
               <img
-                src={selectedService.logo}
+                src={selectedService.logo || "https://demofree.sirv.com/nope-not-here.jpg"}
                 alt={selectedService.shop}
                 className="w-full h-48 object-cover rounded-lg mb-6"
               />
