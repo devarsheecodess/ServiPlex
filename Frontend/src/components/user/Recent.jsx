@@ -55,9 +55,9 @@ const Recent = () => {
                     <p className="text-2xl font-bold text-green-600">
                       {appointment.paymentPrice}
                     </p>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-lg text-yellow-600">
                       Bill:{" "}
-                      <span className="font-medium text-gray-200">
+                      <span className="font-medium text-green-600">
                         ₹ {appointment.price}
                       </span>
                     </p>

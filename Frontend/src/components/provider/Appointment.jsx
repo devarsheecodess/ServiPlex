@@ -176,11 +176,12 @@ const Appointment = () => {
 
                   {/* Decline Button */}
                   <button
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                    onClick={() => handleDecline(appointment)}
-                  >
-                    Decline
-                  </button>
+  className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
+  onClick={() => handleDecline(appointment)}
+>
+  <i className="fa-solid fa-x text-black text-2xl font-extrabold"></i>
+</button>
+
                 </div>
 
                 <div className="flex gap-2 mt-2">
@@ -246,7 +247,7 @@ const Appointment = () => {
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowPopup(false)}
                   >
-                    Cancel
+                   
                   </button>
                 </div>
               </div>

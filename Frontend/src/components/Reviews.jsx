@@ -86,17 +86,17 @@ const Reviews = () => {
         <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">Reviews</h1>
 
 
-        <div className="submit-review text-white mb-6">
+        <div className="submit-review text-yellow-600 mb-6">
           <select
             placeholder="Select the Provider"
-            className="w-full p-4 mb-5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-4 mb-5 border-2 border-yellow-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             value={reviewForm.provider}
             name="provider"
             onChange={handleChange}
           >
-            <option value="" className='text-black' disabled selected>Select the Provider</option>
+            <option value="" className='bg-gray-900 text-white-600' disabled selected>Select the Provider</option>
             {providers.map((provider) => (
-              <option key={provider.id} value={provider.shop} className='text-black'>{provider.shop}</option>
+              <option key={provider.id} value={provider.shop} className='bg-gray-900 text-yellow-600'>{provider.shop}</option>
             ))}
           </select>
 
@@ -106,24 +106,24 @@ const Reviews = () => {
             name="comment"
             onChange={handleChange}
             rows="2"
-            className="w-full p-4 border-2 border-gray-300 rounded-lg mb-4"
+            className="w-full p-4 border-2 border-yellow-600 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
 
           />
           <div className="rating mb-4">
-            <span className="text-lg">Rating:</span>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`text-2xl cursor-pointer ${rating >= star ? 'text-yellow-500' : 'text-gray-400'}`}
-                onClick={() => {
-                  setRating(star);
-                  console.log('Rating updated:', star); // Check if the rating is updating
-                }}
-              >
-                ★
-              </span>
-            ))}
-          </div>
+        <span className="text-lg">Rating:</span>
+         {[1, 2, 3, 4, 5].map((star) => (
+         <span
+              key={star}
+          className={`text-2xl cursor-pointer ${rating >= star ? 'text-yellow-500' : 'text-gray-400'}`}
+            onClick={() => {
+            setRating(star);
+            console.log('Rating updated:', star); // Check if the rating is updating
+           }}
+          >
+              ★
+        </span>
+         ))}
+            </div>
           <button
             onClick={handleSubmit}
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow"
