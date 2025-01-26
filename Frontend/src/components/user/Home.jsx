@@ -59,7 +59,7 @@ const Home = () => {
         </div>
            <div
           className="bg-black text-white border-2 border-blue-600 p-6 rounded-lg shadow-lg flex flex-col items-start relative cursor-pointer hover:scale-105 transition transform duration-300"
-          onClick={() => window.location.href = '/profile'}
+          onClick={() => window.location.href = '/user-payments'}
         >
           <img src="https://cdn.pixabay.com/photo/2021/03/19/13/40/online-6107598_640.png" alt="Payments" className="w-20 h-20 border-2 border-blue-600 rounded-2xl absolute top-4 right-4" />
           <h2 className="text-2xl font-semibold text-white mb-2">Payments</h2>
