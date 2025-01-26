@@ -2,18 +2,18 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 
-app.get('/payments', (req, res) => {
+router.get('/payments', (req, res) => {
     res.status(200).json(payments);
   });
   
-  app.post('/payments', (req, res) => {
+  router.post('/payments', (req, res) => {
     const { providerId, amount, paymentMethod, status } = req.body;
     const newPayment = { id: Date.now(), providerId, amount, paymentMethod, status: status || 'pending' };
     payments.push(newPayment);
     res.status(201).json(newPayment);
   });
   
-  app.put('/payments/:id', (req, res) => {
+  router.put('/payments/:id', (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
     const payment = payments.find(p => p.id === parseInt(id));
