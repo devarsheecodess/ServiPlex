@@ -54,9 +54,6 @@ const ProviderPaymentSetup = () => {
         <h2 className="text-2xl font-extrabold text-green-400 mb-6">Payment Setup</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="providerId" className="block text-sm font-medium text-gray-700">
-              Provider ID
-            </label>
             <input
               type="text"
               name="providerId"
@@ -65,6 +62,7 @@ const ProviderPaymentSetup = () => {
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
+              hidden
             />
           </div>
 

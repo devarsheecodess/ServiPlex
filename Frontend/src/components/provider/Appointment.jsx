@@ -16,14 +16,14 @@ const Appointment = () => {
   const [providerId, setProviderId] = useState(localStorage.getItem("providerID"));
 
   // Fetch appointments from backend
- const fetchAppointments = async () => {
-  try{
-    const response = await axios.get("http://localhost:3000/appointments", {params: {providerId, status: ["pending", "in-progress"]}});
-    setAppointments(response.data);
-  } catch(error){
-    console.error("Error fetching appointments:", error);
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/appointments", { params: { providerId, status: ["pending", "in-progress"] } });
+      setAppointments(response.data);
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
   }
- }
 
   useEffect(() => {
     fetchAppointments();
@@ -161,7 +161,7 @@ const Appointment = () => {
                 <h2 className="text-green-400">
                   Customer Name: {appointment.customerName}
                 </h2>
-                <p className="text-white">Date: {appointment.date.slice(0,10)}</p>
+                <p className="text-white">Date: {appointment.date.slice(0, 10)}</p>
                 <p className="text-white">Status: {appointment.status}</p>
                 <p className="text-white">Payment Status: {appointment.paymentStatus || "N/A"}</p>
 
@@ -176,11 +176,11 @@ const Appointment = () => {
 
                   {/* Decline Button */}
                   <button
-  className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
-  onClick={() => handleDecline(appointment)}
->
-  <i className="fa-solid fa-x text-black text-2xl font-extrabold"></i>
-</button>
+                    className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
+                    onClick={() => handleDecline(appointment)}
+                  >
+                    <i className="fa-solid fa-x text-black text-2xl font-extrabold"></i>
+                  </button>
 
                 </div>
 
@@ -247,7 +247,7 @@ const Appointment = () => {
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowPopup(false)}
                   >
-                   
+                    Cancel
                   </button>
                 </div>
               </div>
