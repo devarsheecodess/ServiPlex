@@ -1,40 +1,156 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
+  const [showStatusPopup, setShowStatusPopup] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [newAppointment, setNewAppointment] = useState({
+    serviceId: "",
+    customerId: "",
+    date: "",
+    status: "pending",
+  });
+  const [paymentStatus, setPaymentStatus] = useState("after");
+
+  // Fetch appointments from backend
+  useEffect(() => {
+    fetch("http://localhost:3000/appointments")
+      .then((response) => response.json())
+      .then((data) => setAppointments(data))
+      .catch((error) => console.error("Error fetching appointments:", error));
+  }, []);
 
   // Handle accepting the appointment
   const handleAccept = (appointment) => {
-    const updatedAppointment = { ...appointment, progress: "Accepted" };
-    setAppointments((prev) => [...prev, updatedAppointment]);
-    setShowPopup(false);
+    const updatedAppointment = { ...appointment, status: "Accepted" };
+
+    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAppointment),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to accept appointment");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setAppointments((prev) =>
+          prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
+        );
+      })
+      .catch((error) => console.error("Error updating appointment:", error));
   };
 
   // Handle declining the appointment
-  const handleDecline = () => {
-    setShowPopup(false);
+  const handleDecline = (appointment) => {
+    const updatedAppointment = { ...appointment, status: "Declined" };
+
+    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAppointment),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to decline appointment");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setAppointments((prev) =>
+          prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
+        );
+      })
+      .catch((error) => console.error("Error updating appointment:", error));
   };
 
+
   // Update the progress of the appointment
-  const handleUpdateProgress = (appointment, status) => {
-    setAppointments((prev) =>
-      prev.map((app) =>
-        app.id === appointment.id ? { ...app, progress: status } : app
-      )
-    );
+  const handleUpdateStatus = (appointment) => {
+    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: appointment.status }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update appointment status");
+        }
+        return response.json();
+      })
+      .then((updatedAppointment) => {
+        setAppointments((prev) =>
+          prev.map((app) =>
+            app._id === updatedAppointment._id ? updatedAppointment : app
+          )
+        );
+        setShowStatusPopup(false);
+      })
+      .catch((error) =>
+        console.error("Error updating appointment status:", error)
+      );
+  };
+
+
+  // Update payment status
+  const handleUpdatePaymentStatus = (appointment) => {
+    const updatedAppointment = { ...appointment, paymentStatus };
+    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAppointment),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update payment status");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setAppointments((prev) =>
+          prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
+        );
+        setShowPopup(false);
+      })
+      .catch((error) => console.error("Error updating payment status:", error));
   };
 
   // Delete the appointment
   const handleDelete = (appointment) => {
-    setAppointments((prev) => prev.filter((app) => app.id !== appointment.id));
+    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to delete appointment, status: ${response.status}`);
+        }
+        setAppointments((prev) => prev.filter((app) => app._id !== appointment._id));
+      })
+      .catch((error) => console.error("Error deleting appointment:", error));
   };
+
+  // Add a new appointment
 
   return (
     <div className="absolute top-0 left-0 w-full h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-8">
       <div className="bg-neutral-900 text-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl">
         <h1 className="text-2xl font-extrabold text-green-400 mb-6">Appointments</h1>
+
+        {/* Add New Appointment Form */}
+
 
         {/* Appointment List */}
         <div className="space-y-4 mt-6">
@@ -43,47 +159,65 @@ const Appointment = () => {
           ) : (
             appointments.map((appointment) => (
               <div
-                key={appointment.id}
+                key={appointment._id}
                 className="bg-neutral-800 p-4 rounded-lg"
               >
                 <h2 className="text-green-400">
-                  {appointment.name} - {appointment.service}
+                  {appointment.serviceId} - {appointment.customerId}
                 </h2>
                 <p className="text-white">Date: {appointment.date}</p>
-                <p className="text-white">Progress: {appointment.progress}</p>
+                <p className="text-white">Status: {appointment.status}</p>
+                <p className="text-white">Payment Status: {appointment.paymentStatus || "N/A"}</p>
+
                 <div className="flex gap-2 mt-2">
-                  {/* Update Progress Button */}
+                  {/* Accept Button */}
                   <button
-                    className={`px-4 py-2 rounded-lg text-black ${
-                      appointment.progress === "Completed"
-                        ? "bg-red-500 hover:bg-red-400"
-                        : "bg-blue-500 hover:bg-blue-400"
-                    }`}
-                    onClick={() =>
-                      appointment.progress === "Completed"
-                        ? handleDelete(appointment)
-                        : handleUpdateProgress(
-                            appointment,
-                            appointment.progress === "Accepted"
-                              ? "In Progress"
-                              : "Completed"
-                          )
-                    }
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                    onClick={() => handleAccept(appointment)}
                   >
-                    {appointment.progress === "Completed"
-                      ? "Delete"
-                      : "Update Progress"}
+                    Accept
                   </button>
 
-                  {/* Show Details Button */}
+                  {/* Decline Button */}
                   <button
-                    className="px-4 py-2 bg-green-500 rounded-lg text-black"
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                    onClick={() => handleDecline(appointment)}
+                  >
+                    Decline
+                  </button>
+                </div>
+
+                <div className="flex gap-2 mt-2">
+
+                  {/* Update Status Button */}
+                  <button
+                    className="px-4 py-2 bg-purple-500 text-black rounded-lg"
+                    onClick={() => {
+                      setSelectedAppointment(appointment);
+                      setShowStatusPopup(true);
+                    }}
+                  >
+                    Update Status
+                  </button>
+
+
+                  {/* Update Payment Status Button */}
+                  <button
+                    className="px-4 py-2 bg-yellow-500 text-black rounded-lg"
                     onClick={() => {
                       setSelectedAppointment(appointment);
                       setShowPopup(true);
                     }}
                   >
-                    View Details
+                    Update Payment Status
+                  </button>
+
+                  {/* Delete Button */}
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                    onClick={() => handleDelete(appointment)}
+                  >
+                    Delete
                   </button>
                 </div>
               </div>
@@ -91,36 +225,94 @@ const Appointment = () => {
           )}
         </div>
 
-        {/* Appointment Details Popup */}
+        {/* Update Payment Status Popup */}
         {showPopup && selectedAppointment && (
           <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center">
             <div className="bg-neutral-900 p-8 rounded-lg w-96">
-              <h2 className="text-2xl font-extrabold text-green-400">
-                Appointment Details
+              <h2 className="text-2xl font-extrabold text-green-400 mb-4">
+                Update Payment Status
               </h2>
-              <p className="text-white">Name: {selectedAppointment.name}</p>
-              <p className="text-white">Service: {selectedAppointment.service}</p>
-              <p className="text-white">Date: {selectedAppointment.date}</p>
-              <p className="text-white">Progress: {selectedAppointment.progress}</p>
-
-              {/* Action Buttons for Accept/Decline */}
-              <div className="flex justify-between mt-4">
-                <button
-                  className="px-4 py-2 bg-green-500 text-black rounded-lg"
-                  onClick={() => handleAccept(selectedAppointment)}
+              <p className="text-white mb-4">
+                Update the payment status for the appointment with Service ID:{" "}
+                <span className="text-green-300 font-bold">
+                  {selectedAppointment.serviceId}
+                </span>
+              </p>
+              <div className="flex flex-col gap-4">
+                <select
+                  className="p-2 rounded-lg bg-neutral-800 text-white"
+                  value={paymentStatus}
+                  onChange={(e) => setPaymentStatus(e.target.value)}
                 >
-                  Accept
-                </button>
-                <button
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                  onClick={handleDecline}
-                >
-                  Decline
-                </button>
+                  <option value="before">Pay Before</option>
+                  <option value="after">Pay After</option>
+                </select>
+                <div className="flex justify-between">
+                  <button
+                    className="px-4 py-2 bg-green-500 text-black rounded-lg"
+                    onClick={() => handleUpdatePaymentStatus(selectedAppointment)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                    onClick={() => setShowPopup(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         )}
+        {/* Update Status Popup */}
+        {showStatusPopup && selectedAppointment && (
+          <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center">
+            <div className="bg-neutral-900 p-8 rounded-lg w-96">
+              <h2 className="text-2xl font-extrabold text-green-400 mb-4">
+                Update Appointment Status
+              </h2>
+              <p className="text-white mb-4">
+                Update the status for the appointment with Service ID:{" "}
+                <span className="text-green-300 font-bold">
+                  {selectedAppointment.serviceId}
+                </span>
+              </p>
+              <div className="flex flex-col gap-4">
+                <select
+                  className="p-2 rounded-lg bg-neutral-800 text-white"
+                  value={selectedAppointment.status}
+                  onChange={(e) =>
+                    setSelectedAppointment({
+                      ...selectedAppointment,
+                      status: e.target.value,
+                    })
+                  }
+                >
+                  <option value="pending">Pending</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+                <div className="flex justify-between">
+                  <button
+                    className="px-4 py-2 bg-green-500 text-black rounded-lg"
+                    onClick={() => handleUpdateStatus(selectedAppointment)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                    onClick={() => setShowStatusPopup(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
