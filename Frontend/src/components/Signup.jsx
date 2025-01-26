@@ -15,7 +15,7 @@ const UserForm = () => {
       console.log(form);
       const response = await axios.post("http://localhost:3000/user-signup", form);
       console.log(response);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("User registered successfully!");
         setForm({ id: uuidv4(), name: "", username: "", email: "", password: "" });
       }

@@ -14,6 +14,8 @@ import Profile from './components/user/Profile';
 import Reviews from './components/Reviews';
 import Replies from './components/Replies';
 import ProviderPaymentSetup from './components/provider/Payments';
+import Payments from './components/user/Payments';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -124,6 +126,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Profile />
+      </div>
+    ),
+  },
+  {
+    path: "/user-payments",
+    element: (
+      <div>
+        <Payments />
       </div>
     ),
   },

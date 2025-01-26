@@ -1,7 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
-const PaymentDetails = require('../Models/paymentModel');
+
+
+const PaymentSchema2 = new mongoose.Schema({
+    providerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Provider" },
+    upiId: { type: String, required: true },
+    bankAccountNumber: { type: String, required: true },
+    ifscCode: { type: String, required: true },
+    accountHolderName: { type: String, required: true },
+  });
+
+const PaymentDetails= mongoose.model('PaymentDetails', PaymentSchema2);
 
 router.post("/", async (req, res) => {
   const { providerId, upiId, bankAccountNumber, ifscCode, accountHolderName } = req.body;

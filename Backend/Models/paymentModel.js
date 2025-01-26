@@ -1,10 +1,32 @@
 // Payment Model
 const mongoose = require('mongoose');
-const PaymentSchema = new mongoose.Schema({
-  providerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Provider" },
-  upiId: { type: String, required: true },
-  bankAccountNumber: { type: String, required: true },
-  ifscCode: { type: String, required: true },
-  accountHolderName: { type: String, required: true },
-});
-  module.exports = mongoose.model('Payment', PaymentSchema);
+const paymentSchema = new mongoose.Schema({
+    providerId: {
+      type: String,
+      required: true,
+    },
+    customerId:{
+      type: String,
+      required: true
+    },
+    shopName:{
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    paymentMethod: {
+      type: String,
+      enum: ['credit card', 'cash', 'UPI'],
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'completed'],
+      default: 'pending',
+    },
+  }, { timestamps: true });
+  
+  module.exports = mongoose.model('Payment', paymentSchema);

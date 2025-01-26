@@ -7,23 +7,35 @@ const mongoose=require('mongoose')
 const appointments = [];    
 
 router.get('/', async (req, res) => {
-    try {
-      // Retrieve all services from the database
-      const appointments = await Appointment.find();  // Using Mongoose's find() method to get all documents
-  
-      res.status(200).json(appointments);  // Respond with the services data
-    } catch (err) {
-      res.status(500).json({ error: 'Error fetching services from the database', details: err.message });
-    }
-  });
+  const { providerId, status } = req.query;
+
+  try {
+    // Parse status into an array if it's a string
+    const statusArray = Array.isArray(status) ? status : [status];
+
+    // Retrieve appointments based on providerId and status array
+    const appointments = await Appointment.find({
+      providerId,
+      status: { $in: statusArray },
+    });
+
+    res.status(200).json(appointments); // Respond with the appointments data
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: 'Error fetching appointments from the database', details: err.message });
+  }
+});
+
   
 router.post('/', async (req, res) => {
-  const { providerId, customerId, shop, services, price, date, status } = req.body;
+  const { providerId, customerId, customerName, shop, services, price, date, status } = req.body;
 
   // Create a new appointment
   const newAppointment = new Appointment({
       providerId,
       customerId,
+      customerName,
       shop,
       services,
       price,

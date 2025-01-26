@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-
+import axios from "axios";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -14,13 +13,20 @@ const Appointment = () => {
     status: "pending",
   });
   const [paymentStatus, setPaymentStatus] = useState("after");
+  const [providerId, setProviderId] = useState(localStorage.getItem("providerID"));
 
   // Fetch appointments from backend
+ const fetchAppointments = async () => {
+  try{
+    const response = await axios.get("http://localhost:3000/appointments", {params: {providerId, status: ["pending", "in-progress"]}});
+    setAppointments(response.data);
+  } catch(error){
+    console.error("Error fetching appointments:", error);
+  }
+ }
+
   useEffect(() => {
-    fetch("http://localhost:3000/appointments")
-      .then((response) => response.json())
-      .then((data) => setAppointments(data))
-      .catch((error) => console.error("Error fetching appointments:", error));
+    fetchAppointments();
   }, []);
 
   // Handle accepting the appointment
@@ -44,6 +50,7 @@ const Appointment = () => {
         setAppointments((prev) =>
           prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
         );
+        window.location.reload();
       })
       .catch((error) => console.error("Error updating appointment:", error));
   };
@@ -69,6 +76,7 @@ const Appointment = () => {
         setAppointments((prev) =>
           prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
         );
+        window.location.reload();
       })
       .catch((error) => console.error("Error updating appointment:", error));
   };
@@ -96,6 +104,7 @@ const Appointment = () => {
           )
         );
         setShowStatusPopup(false);
+        window.location.reload();
       })
       .catch((error) =>
         console.error("Error updating appointment status:", error)
@@ -124,22 +133,9 @@ const Appointment = () => {
           prev.map((app) => (app._id === appointment._id ? updatedAppointment : app))
         );
         setShowPopup(false);
+        window.location.reload();
       })
       .catch((error) => console.error("Error updating payment status:", error));
-  };
-
-  // Delete the appointment
-  const handleDelete = (appointment) => {
-    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to delete appointment, status: ${response.status}`);
-        }
-        setAppointments((prev) => prev.filter((app) => app._id !== appointment._id));
-      })
-      .catch((error) => console.error("Error deleting appointment:", error));
   };
 
   // Add a new appointment
@@ -163,9 +159,9 @@ const Appointment = () => {
                 className="bg-neutral-800 p-4 rounded-lg"
               >
                 <h2 className="text-green-400">
-                  {appointment.serviceId} - {appointment.customerId}
+                  Customer Name: {appointment.customerName}
                 </h2>
-                <p className="text-white">Date: {appointment.date}</p>
+                <p className="text-white">Date: {appointment.date.slice(0,10)}</p>
                 <p className="text-white">Status: {appointment.status}</p>
                 <p className="text-white">Payment Status: {appointment.paymentStatus || "N/A"}</p>
 
@@ -210,14 +206,6 @@ const Appointment = () => {
                     }}
                   >
                     Update Payment Status
-                  </button>
-
-                  {/* Delete Button */}
-                  <button
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                    onClick={() => handleDelete(appointment)}
-                  >
-                    Delete
                   </button>
                 </div>
               </div>

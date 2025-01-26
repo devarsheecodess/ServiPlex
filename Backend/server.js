@@ -78,7 +78,7 @@ app.post('/user-login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    res.status(200).json({ message: 'Login successful', success: true, id: user.id });
+    res.status(200).json({ message: 'Login successful', success: true, id: user.id , name: user.name});
   } catch (error) {
     console.error('Error logging in user:', error);
     res.status(500).json({ message: 'Error logging in user', error });
@@ -106,10 +106,44 @@ app.post('/provider-login', async (req, res) => {
     res.status(500).json({ message: 'Error logging in provider', error });
   }
 });
+
+// User Details
+app.get('/profile', async (req, res) => {
+  const id = req.query.id;
+  try{
+    const user = await User.find({id: id});
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ message: 'Error fetching user details', error });
+  }
+});
+
+// Update User Details
+app.put('/profile', async (req, res) => {
+  const id = req.query.id;
+  const { email, username, name, password } = req.body;
+  try{
+    let user;
+    if(password.length > 0){
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user = await User.findOneAndUpdate({id: id}, {email, username, name, password: hashedPassword});
+    }
+    else{
+      user = await User.findOneAndUpdate({id: id}, {email, username, name});
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    res.status(500).json({ message: 'Error updating user details', error });
+  }
+});
+
 const appointmentRoutes = require('./routes/appointmentRoutes');
-const paymentRoutes = require('./routes/providerpay');
+const paymentRoutes = require('./routes/PaymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const providerPay=require('./routes/providerpay')
 
 const Service = require('./Models/serviceModel')
 
@@ -118,6 +152,7 @@ app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/services', serviceRoutes);
+app.use('/providerPay',providerPay);
 
 // User routes
 const services = require('./routes/Services');
