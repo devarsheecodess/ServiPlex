@@ -100,10 +100,21 @@ app.post('/provider-login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    res.status(200).json({ message: 'Login successful', success: true, id: provider.id });
+    res.status(200).json({ message: 'Login successful', success: true, id: provider.id , shop: provider.shop});
   } catch (error) {
     console.error('Error logging in provider:', error);
     res.status(500).json({ message: 'Error logging in provider', error });
+  }
+});
+
+// Get provider details
+app.get('/provider', async (req, res) => {
+  try{
+    const provider = await Provider.find();
+    res.status(200).json(provider);
+  } catch (error) {
+    console.error('Error fetching provider details:', error);
+    res.status(500).json({ message: 'Error fetching provider details', error });
   }
 });
 
@@ -140,9 +151,10 @@ app.put('/profile', async (req, res) => {
 });
 
 const appointmentRoutes = require('./routes/appointmentRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+const paymentRoutes = require('./routes/PaymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const providerPay=require('./routes/providerpay')
 
 const Service = require('./Models/serviceModel')
 
@@ -151,6 +163,7 @@ app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/services', serviceRoutes);
+app.use('/providerPay',providerPay);
 
 // User routes
 const services = require('./routes/Services');

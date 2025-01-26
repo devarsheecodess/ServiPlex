@@ -1,15 +1,21 @@
 const mongoose = require('mongoose');
 
-const reviewSchema = new mongoose.Schema(
-  {
-    serviceId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Service',
+const reviewSchema = new mongoose.Schema({
+    id: {
+      type: String,
       required: true,
     },
     customerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Assuming a User model exists
+      type: String,
+      required: true,
+    },
+    customerName: {
+      type: String,
+      default: 'Anonymous',
+      required: false,
+    },
+    provider: {
+      type: String,
       required: true,
     },
     rating: {
@@ -25,6 +31,10 @@ const reviewSchema = new mongoose.Schema(
     providerResponse: {
       type: String,
       required: false,
+    },
+    date: {
+      type: String,
+      default: Date
     },
   },
   { timestamps: true }
