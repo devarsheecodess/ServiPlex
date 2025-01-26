@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Review = require('../Models/reviewModel'); // Import the Review model
+const Review = require('../Models/reviewModel');
 
 // 1. Get all reviews
 router.get('/', async (req, res) => {
+  const userID = req.query.id;
   try {
-    const reviews = await Review.find(); // Fetch all reviews from the database
+    const reviews = await Review.find({customerId: userID}); // Fetch all reviews from the database
     res.status(200).json(reviews);
   } catch (error) {
     console.error('Error fetching reviews:', error);
@@ -13,17 +14,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 2. Get reviews for a specific service
-router.get('/:serviceId', async (req, res) => {
-  const { serviceId } = req.params;
-
+// Get review by name
+router.get('/name', async (req, res) => {
+  const name = req.query.name;
   try {
-    const serviceReviews = await Review.find({ serviceId: serviceId }); // Fetch reviews by serviceId
-    if (serviceReviews.length === 0) {
-      return res.status(404).json({ message: `No reviews found for service ID: ${serviceId}` });
-    }
-
-    res.status(200).json(serviceReviews);
+    const reviews = await Review.find({provider: name}); // Fetch all reviews from the database
+    res.status(200).json(reviews);
   } catch (error) {
     console.error('Error fetching reviews:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -31,27 +27,19 @@ router.get('/:serviceId', async (req, res) => {
 });
 
 // 3. Add a new review
-// 3. Add a new review
 router.post('/', async (req, res) => {
-  const { rating, providerName, userName, comment } = req.body;
-
-  // Check if the fields are provided and not empty (including trimming spaces)
-  if (
-    !rating ||
-    !providerName.trim() ||
-    !userName.trim()
-  ) {
-    return res.status(400).json({ message: 'Rating, provider name, and user name are required.' });
-  }
+  const { id,customerId, customerName, provider, comment, rating, providerResponse, date } = req.body;
 
   try {
-    // Create and save a new review
     const newReview = new Review({
-      providerName: providerName.trim(),
-      userName: userName.trim(),
-      rating: parseInt(rating),
-      comment: comment ? comment.trim() : '',
-      date: new Date().toISOString(),
+      id,
+      customerId,
+      customerName,
+      provider,
+      comment,
+      rating,
+      providerResponse,
+      date,
     });
 
     const savedReview = await newReview.save(); // Save to the database
@@ -63,14 +51,12 @@ router.post('/', async (req, res) => {
 });
 
 
-// 4. Update provider response for a review
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { providerResponse } = req.body;
+router.put('/', async (req, res) => {
+  const { id, providerResponse } = req.body; // Get id and providerResponse from the request body
 
   try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      id,
+    const updatedReview = await Review.findOneAndUpdate(
+      { id: id }, // Use the id from the request body to find the review
       { providerResponse },
       { new: true } // Return the updated document
     );
@@ -85,5 +71,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 module.exports = router;

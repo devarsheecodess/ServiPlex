@@ -25,6 +25,7 @@ const Login = () => {
         window.location.href = "/user-home";
       } else if (response2 && response2.status === 200) {
         alert("Login successful");
+        localStorage.setItem("provider", response2.data.shop);
         localStorage.setItem("providerID", response2.data.id);
         window.location.href = "/provider-home";
       } else {
