@@ -15,7 +15,7 @@ import Reviews from './components/Reviews';
 import Replies from './components/Replies';
 import ProviderPaymentSetup from './components/provider/Payments';
 import Payments from './components/user/Payments';
-import ServiceDiscovery from './components/provider/Search_Discovery/ServiceDiscovery';
+import ServiceDiscovery from './components/user/Search_Discovery/ServiceDiscovery';
 
 const router = createBrowserRouter([
   {
