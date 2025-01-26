@@ -11,7 +11,7 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({
     id: uuidv4(),
-    customerId : localStorage.getItem('userID'),
+    customerId: localStorage.getItem('userID'),
     customerName: localStorage.getItem('name'),
     provider: '',
     comment: '',
@@ -23,7 +23,7 @@ const Reviews = () => {
 
   const fetchProviders = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/provider', {params: {id: id}});
+      const response = await axios.get('http://localhost:3000/provider', { params: { id: id } });
       setProviders(response.data);
     } catch (error) {
       console.error('Error fetching providers:', error);
@@ -43,10 +43,10 @@ const Reviews = () => {
       }
 
       const updatedReviewForm = { ...reviewForm, rating: rating };
-  
+
       // Log the updated review form
       console.log(updatedReviewForm);
-  
+
       const response = await axios.post('http://localhost:3000/reviews', updatedReviewForm);
       if (response.status === 201) {
         alert('Review submitted successfully');
@@ -67,10 +67,10 @@ const Reviews = () => {
   };
 
   const fetchReviews = async () => {
-    try{
-      const response = await axios.get('http://localhost:3000/reviews', {params: {id: id}});
+    try {
+      const response = await axios.get('http://localhost:3000/reviews', { params: { id: id } });
       setReviews(response.data);
-    }catch{
+    } catch {
       console.error('Error fetching reviews:', error);
     }
   }
@@ -84,8 +84,6 @@ const Reviews = () => {
     <div className="absolute w-full top-0 left-0 h-full bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
       <div className="max-w-4xl mx-auto bg-transparent p-6 rounded-lg shadow-xl">
         <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">Reviews</h1>
-
-
         <div className="submit-review text-yellow-600 mb-6">
           <select
             placeholder="Select the Provider"
@@ -110,20 +108,20 @@ const Reviews = () => {
 
           />
           <div className="rating mb-4">
-        <span className="text-lg">Rating:</span>
-         {[1, 2, 3, 4, 5].map((star) => (
-         <span
-              key={star}
-          className={`text-2xl cursor-pointer ${rating >= star ? 'text-yellow-500' : 'text-gray-400'}`}
-            onClick={() => {
-            setRating(star);
-            console.log('Rating updated:', star); // Check if the rating is updating
-           }}
-          >
-              ★
-        </span>
-         ))}
-            </div>
+            <span className="text-lg">Rating:</span>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`text-2xl cursor-pointer ${rating >= star ? 'text-yellow-500' : 'text-gray-400'}`}
+                onClick={() => {
+                  setRating(star);
+                  console.log('Rating updated:', star); // Check if the rating is updating
+                }}
+              >
+                ★
+              </span>
+            ))}
+          </div>
           <button
             onClick={handleSubmit}
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow"

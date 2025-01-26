@@ -16,14 +16,14 @@ const Appointment = () => {
   const [providerId, setProviderId] = useState(localStorage.getItem("providerID"));
 
   // Fetch appointments from backend
- const fetchAppointments = async () => {
-  try{
-    const response = await axios.get("http://localhost:3000/appointments", {params: {providerId, status: ["pending", "in-progress"]}});
-    setAppointments(response.data);
-  } catch(error){
-    console.error("Error fetching appointments:", error);
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/appointments", { params: { providerId, status: ["pending", "in-progress"] } });
+      setAppointments(response.data);
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
   }
- }
 
   useEffect(() => {
     fetchAppointments();
@@ -161,26 +161,26 @@ const Appointment = () => {
                 <h2 className="text-green-400">
                   Customer Name: {appointment.customerName}
                 </h2>
-                <p className="text-white">Date: {appointment.date.slice(0,10)}</p>
+                <p className="text-white">Date: {appointment.date.slice(0, 10)}</p>
                 <p className="text-white">Status: {appointment.status}</p>
                 <p className="text-white">Payment Status: {appointment.paymentStatus || "N/A"}</p>
 
                 <div className="flex gap-2 mt-2">
                   {/* Decline Button */}
                   <button
-  className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
-  onClick={() => handleDecline(appointment)}
->
-  <i className="fa-solid fa-trash text-black text-2xl font-extrabold"></i>
-</button>
-<button
+                    className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
+                    onClick={() => handleDecline(appointment)}
+                  >
+                    <i className="fa-solid fa-trash text-black text-2xl font-extrabold"></i>
+                  </button>
+                  <button
                     className="px-4 py-2 bg-blue-600  rounded-lg  border-blue-500 transition hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/50"
                     onClick={() => {
                       setSelectedAppointment(appointment);
                       setShowStatusPopup(true);
                     }}
                   >
-                      <i className="fa-solid fa-pen-to-square text-yellow-400"></i>
+                    <i className="fa-solid fa-pen-to-square text-yellow-400"></i>
                   </button>
 
 
@@ -227,13 +227,13 @@ const Appointment = () => {
                     className="px-4 py-2 bg-green-500 text-black rounded-lg"
                     onClick={() => handleUpdatePaymentStatus(selectedAppointment)}
                   >
-                     <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowPopup(false)}
                   >
-                   <i class="fa-solid fa-xmark text-black text-3xl"></i>
+                    <i class="fa-solid fa-xmark text-black text-3xl"></i>
                   </button>
                 </div>
               </div>
@@ -274,13 +274,13 @@ const Appointment = () => {
                     className="px-4 py-2 bg-green-500 text-black rounded-lg"
                     onClick={() => handleUpdateStatus(selectedAppointment)}
                   >
-                   <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowStatusPopup(false)}
                   >
-                  <i class="fa-solid fa-xmark text-black text-3xl"></i>
+                    <i class="fa-solid fa-xmark text-black text-3xl"></i>
                   </button>
                 </div>
               </div>

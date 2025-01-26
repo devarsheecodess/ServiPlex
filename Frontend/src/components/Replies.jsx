@@ -57,7 +57,7 @@ const Reviews = () => {
           className="reviews-swiper"
         >
           {reviews.map((review) => (
-            <SwiperSlide key={review.id}>
+            <SwiperSlide key={review._id}>
               <div
                 className="bg-gray-900 bg-opacity-90 p-6 rounded-3xl shadow-lg transition-shadow border-2 border-yellow-500 hover:border-yellow-500 hover:border-2 cursor-pointer"
               >
