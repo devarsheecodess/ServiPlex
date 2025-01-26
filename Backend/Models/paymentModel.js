@@ -2,9 +2,16 @@
 const mongoose = require('mongoose');
 const paymentSchema = new mongoose.Schema({
     providerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Assuming a User model exists for the provider
+      type: String,
       required: true,
+    },
+    customerId:{
+      type: String,
+      required: true
+    },
+    shopName:{
+      type: String,
+      required: true
     },
     amount: {
       type: Number,
