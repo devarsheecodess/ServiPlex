@@ -151,7 +151,7 @@ const Services = () => {
                 className="absolute cursor-pointer outline-0 top-4 right-4 text-gray-300 hover:text-white text-xl"
                 onClick={() => setViewAll(false)}
               >
-                ✖
+               <i className="fa-solid fa-xmark text-green-600"></i>
               </button>
               <h2 className="text-3xl font-semibold text-cyan-400 mb-6">All Services</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -168,7 +168,7 @@ const Services = () => {
                       className="bg-green-500 cursor-pointer text-black py-2 px-4 rounded-lg hover:bg-green-400 transition-transform duration-300 transform hover:scale-105"
                       onClick={() => addToOrder(service)}
                     >
-                      +
+                      <i className="fa-solid fa-plus text-black"></i>
                     </button>
                   </div>
                 ))}

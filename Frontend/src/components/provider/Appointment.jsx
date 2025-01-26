@@ -142,21 +142,21 @@ const Appointment = () => {
 
   return (
     <div className="absolute top-0 left-0 w-full h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-8">
-      <div className="bg-neutral-900 text-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl">
+      <div className="bg-neutral-900 text-white w-full max-w-4xl p-8 rounded-2xl shadow-2xl border-2 border-amber-500   transition hover:border-yellow-300 hover:shadow-md hover:shadow-yellow-500/50  ">
         <h1 className="text-2xl font-extrabold text-green-400 mb-6">Appointments</h1>
 
         {/* Add New Appointment Form */}
 
 
         {/* Appointment List */}
-        <div className="space-y-4 mt-6">
+        <div className="space-y-4 mt-6 ">
           {appointments.length === 0 ? (
             <p className="text-white">No appointments available</p>
           ) : (
             appointments.map((appointment) => (
               <div
                 key={appointment._id}
-                className="bg-neutral-800 p-4 rounded-lg"
+                className="bg-neutral-800 p-4 rounded-lg  border-2 border-amber-500   transition hover:border-yellow-300 hover:shadow-md hover:shadow-yellow-500/50  hover:scale-105 flex flex-col "
               >
                 <h2 className="text-green-400">
                   Customer Name: {appointment.customerName}
@@ -166,47 +166,33 @@ const Appointment = () => {
                 <p className="text-white">Payment Status: {appointment.paymentStatus || "N/A"}</p>
 
                 <div className="flex gap-2 mt-2">
-                  {/* Accept Button */}
-                  <button
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                    onClick={() => handleAccept(appointment)}
-                  >
-                    Accept
-                  </button>
-
                   {/* Decline Button */}
                   <button
   className="px-4 py-2 bg-red-500 rounded-lg border-2 border-red-500 transition hover:border-red-300 hover:shadow-md hover:shadow-red-500/50"
   onClick={() => handleDecline(appointment)}
 >
-  <i className="fa-solid fa-x text-black text-2xl font-extrabold"></i>
+  <i className="fa-solid fa-trash text-black text-2xl font-extrabold"></i>
 </button>
-
-                </div>
-
-                <div className="flex gap-2 mt-2">
-
-                  {/* Update Status Button */}
-                  <button
-                    className="px-4 py-2 bg-purple-500 text-black rounded-lg"
+<button
+                    className="px-4 py-2 bg-blue-600  rounded-lg  border-blue-500 transition hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/50"
                     onClick={() => {
                       setSelectedAppointment(appointment);
                       setShowStatusPopup(true);
                     }}
                   >
-                    Update Status
+                      <i className="fa-solid fa-pen-to-square text-yellow-400"></i>
                   </button>
 
 
                   {/* Update Payment Status Button */}
                   <button
-                    className="px-4 py-2 bg-yellow-500 text-black rounded-lg"
+                    className="px-4 py-2 bg-green-500  rounded-lg   border-green-500 transition hover:border-green-300 hover:shadow-md hover:shadow-green-500/50"
                     onClick={() => {
                       setSelectedAppointment(appointment);
                       setShowPopup(true);
                     }}
                   >
-                    Update Payment Status
+                    <i class="fa-solid fa-money-bill  text-2xl font-extrabold"></i>
                   </button>
                 </div>
               </div>
@@ -216,8 +202,8 @@ const Appointment = () => {
 
         {/* Update Payment Status Popup */}
         {showPopup && selectedAppointment && (
-          <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center">
-            <div className="bg-neutral-900 p-8 rounded-lg w-96">
+          <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50">
+            <div className="bg-[rgba(255,255,255,0.1)] backdrop-blur-lg border border-[rgba(255,255,255,0.2)] rounded-xl p-8 max-w-3xl  text-white relative shadow-2xl">
               <h2 className="text-2xl font-extrabold text-green-400 mb-4">
                 Update Payment Status
               </h2>
@@ -241,13 +227,13 @@ const Appointment = () => {
                     className="px-4 py-2 bg-green-500 text-black rounded-lg"
                     onClick={() => handleUpdatePaymentStatus(selectedAppointment)}
                   >
-                    Update
+                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowPopup(false)}
                   >
-                   
+                   <i class="fa-solid fa-xmark text-black text-3xl"></i>
                   </button>
                 </div>
               </div>
@@ -256,8 +242,8 @@ const Appointment = () => {
         )}
         {/* Update Status Popup */}
         {showStatusPopup && selectedAppointment && (
-          <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center">
-            <div className="bg-neutral-900 p-8 rounded-lg w-96">
+          <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50">
+            <div className="bg-[rgba(255,255,255,0.1)] backdrop-blur-lg border border-[rgba(255,255,255,0.2)] rounded-xl p-8 max-w-3xl  text-white relative shadow-2xl">
               <h2 className="text-2xl font-extrabold text-green-400 mb-4">
                 Update Appointment Status
               </h2>
@@ -288,13 +274,13 @@ const Appointment = () => {
                     className="px-4 py-2 bg-green-500 text-black rounded-lg"
                     onClick={() => handleUpdateStatus(selectedAppointment)}
                   >
-                    Update
+                   <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => setShowStatusPopup(false)}
                   >
-                    Cancel
+                  <i class="fa-solid fa-xmark text-black text-3xl"></i>
                   </button>
                 </div>
               </div>
