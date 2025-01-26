@@ -12,16 +12,15 @@ const Payments = () => {
             const response = await axios.get('http://localhost:3000/userAppointments', {
                 params: {
                     customerId: id,
-                    status: 'completed'
-                }
+                    status: 'completed',
+                },
             });
             console.log('Payments:', response.data);
             setPayments(response.data);
         } catch (error) {
             console.error('Error fetching payments:', error);
-            // Optionally set an error state here
         }
-    };    
+    };
 
     const calculateTotal = (payments) => {
         return payments.reduce((total, payment) => total + payment.price, 0);
@@ -29,34 +28,41 @@ const Payments = () => {
 
     useEffect(() => {
         fetchPayments();
-    }, [id]); // Fetch payments when user ID changes
+    }, [id]);
 
     useEffect(() => {
         setTotalVal(calculateTotal(payments));
-    }, [payments]); // Recalculate total when payments change
+    }, [payments]);
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Payments</h1>
-            <h4>Total Expense: ₹{totalVal}</h4>
+        <div className="absolute top-0 left-0 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-4">
+            {/* Header Section */}
+            <h1 className="text-4xl font-extrabold text-[#32cd32] mb-8">
+                Payments Overview
+            </h1>
+            <h4 className="text-xl font-bold text-yellow-500 mb-6">
+                Total Expense: ₹{totalVal}
+            </h4>
+
+            {/* Payment Cards */}
             {payments.length > 0 ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {payments.map((payment) => (
                         <div
                             key={payment.id}
-                            className="bg-gray-800 text-white p-4 rounded-lg shadow-md"
+                            className="bg-neutral-900 p-6 text-green-600 border-yellow-600 border-2 rounded-xl shadow-lg hover:shadow-yellow-600 transition-shadow  hover:scale-105 "
                         >
-                            <p className="text-lg font-medium">
-                                <span className="font-bold">Shop:</span> {payment.shop}
+                            <p className="text-lg font-semibold mb-2">
+                                <span className="text-yellow-400">Shop:</span> {payment.shop}
                             </p>
-                            <p className="text-lg font-medium">
-                                <span className="font-bold">Amount:</span> ₹{payment.price}
+                            <p className="text-lg font-semibold">
+                                <span className="text-yellow-400">Amount:</span> ₹{payment.price}
                             </p>
                         </div>
                     ))}
                 </div>
             ) : (
-                <p className="text-gray-400">No payments found.</p>
+                <p className="text-gray-400 text-lg mt-10">No payments found.</p>
             )}
         </div>
     );
