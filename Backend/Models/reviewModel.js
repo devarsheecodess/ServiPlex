@@ -1,7 +1,7 @@
-// Review Model
 const mongoose = require('mongoose');
 
-const reviewSchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema(
+  {
     serviceId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Service',
@@ -22,7 +22,12 @@ const reviewSchema = new mongoose.Schema({
       type: String,
       required: false, // Optional field
     },
-  }, { timestamps: true });
-  
-  module.exports = mongoose.model('Review', reviewSchema);
-  
+    providerResponse: {
+      type: String,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Review', reviewSchema);
