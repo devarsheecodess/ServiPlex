@@ -51,14 +51,12 @@ router.post('/', async (req, res) => {
 });
 
 
-// 4. Update provider response for a review
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { providerResponse } = req.body;
+router.put('/', async (req, res) => {
+  const { id, providerResponse } = req.body; // Get id and providerResponse from the request body
 
   try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      id,
+    const updatedReview = await Review.findOneAndUpdate(
+      { id: id }, // Use the id from the request body to find the review
       { providerResponse },
       { new: true } // Return the updated document
     );
@@ -73,5 +71,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 module.exports = router;

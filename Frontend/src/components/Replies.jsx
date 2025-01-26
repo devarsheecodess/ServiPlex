@@ -6,7 +6,6 @@ import axios from 'axios';
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [reply, setReply] = useState('');
-  const [selectedReview, setSelectedReview] = useState(null);
 
   const fetchReviews = async () => {
     try {
@@ -21,23 +20,23 @@ const Reviews = () => {
     }
   };
 
+  const sendReply = async (id) => {
+    try {
+      const response = await axios.put(
+        'http://localhost:3000/reviews', // No `id` in the URL
+        { id: id, providerResponse: reply } // Pass `id` and `providerResponse` in the request body
+      );
+      console.log('Response:', response.data);
+      fetchReviews();
+    } catch (error) {
+      console.error('Error sending reply:', error);
+      alert('An error occurred while sending reply');
+    }
+  };  
+
   useEffect(() => {
     fetchReviews();
   }, []);
-
-  // Handle provider reply submission
-  const handleReplySubmit = () => {
-    const updatedReviews = reviews.map((review) => {
-      if (review.id === selectedReview.id) {
-        return { ...review, providerResponse: reply };
-      }
-      return review;
-    });
-    setReviews(updatedReviews);
-    setReply('');
-    setSelectedReview(null);
-    alert('Reply submitted!');
-  };
 
   return (
     <div className="absolute w-full top-0 left-0 h-full bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
@@ -61,9 +60,8 @@ const Reviews = () => {
             <SwiperSlide key={review.id}>
               <div
                 className="bg-gray-900 bg-opacity-90 p-6 rounded-3xl shadow-lg transition-shadow border-2 border-yellow-500 hover:border-yellow-500 hover:border-2 cursor-pointer"
-                onClick={() => setSelectedReview(review)}
               >
-                <h3 className="text-2xl font-bold text-green-600">{review.provider}</h3>
+                <h3 className="text-2xl font-bold text-green-600">{review.customerName}</h3>
                 <p className="text-yellow-500">{review.comment}</p>
                 <div className="rating-display mt-2 text-yellow-500">
                   Rating: {'★'.repeat(review.rating)}{' '}
@@ -77,44 +75,23 @@ const Reviews = () => {
                     <p>{review.providerResponse}</p>
                   </div>
                 )}
+
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    onChange={(e) => setReply(e.target.value)}
+                    placeholder="Reply to this review"
+                    className="w-full p-3 border-2 border-gray-300 bg-gray-300 mt-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent shadow-md"
+                  />
+                  <button onClick={()=>sendReply(review.id)} className="absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full outline-0 mt-3 text-black p-4 cursor-pointer transition-all duration-200">
+                    <i className="fa-solid fa-paper-plane"></i>
+                  </button>
+                </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-
-      {/* Modal for responding */}
-      {selectedReview && (
-        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Respond to Review</h2>
-            <p className="mb-2">
-              <strong>Review:</strong> {selectedReview.comment}
-            </p>
-            <textarea
-              placeholder="Write your reply here"
-              value={reply}
-              onChange={(e) => setReply(e.target.value)}
-              rows="4"
-              className="w-full p-4 border-2 border-gray-300 rounded-lg mb-4"
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={() => setSelectedReview(null)}
-                className="px-4 py-2 bg-gray-300 text-black rounded-lg mr-2"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleReplySubmit}
-                className="px-4 py-2 bg-yellow-600 text-white rounded-lg"
-              >
-                Submit Reply
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
