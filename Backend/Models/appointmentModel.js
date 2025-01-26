@@ -25,6 +25,15 @@ const appointmentSchema = new mongoose.Schema({
       enum: ['pending', 'in progress', 'completed'],
       default: 'pending',
     },
+    paymentStatus: { // New field for payment requirement
+      type: String,
+      enum: ['before', 'after'],
+      default: 'after',  // Default is pay after service
+    },
+    paymentStatusUpdated: { // Track if payment status was updated
+      type: Date,
+      default: null
+    }
   }, { timestamps: true });
   
   module.exports = mongoose.model('Appointment', appointmentSchema);

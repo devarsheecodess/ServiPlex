@@ -46,27 +46,32 @@ router.get('/', async (req, res) => {
     }
 });
 router.put('/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { status } = req.body;
-  
-      const updatedAppointment = await Appointment.findByIdAndUpdate(
-        id,
-        { status },
-        { new: true } // Returns the updated document
-      );
-  
-      if (!updatedAppointment) {
-        return res.status(404).json({ message: 'Appointment not found' });
-      }
-  
-      res.status(200).json(updatedAppointment);
-    } catch (err) {
-      res.status(500).json({ 
-        error: 'Error updating appointment status', 
-        details: err.message 
-      });
+  const { id } = req.params;
+  const { status, paymentStatus } = req.body;
+
+  try {
+    const updatedAppointment = await Appointment.findByIdAndUpdate(
+      id,
+      { 
+        status,
+        paymentStatus,  // Update payment status (before or after)
+        paymentStatusUpdated: new Date()
+      },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedAppointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
     }
-  });
+
+    res.status(200).json(updatedAppointment);
+  } catch (err) {
+    res.status(500).json({
+      error: 'Error updating appointment status',
+      details: err.message
+    });
+  }
+});
+
 
 module.exports = router;
