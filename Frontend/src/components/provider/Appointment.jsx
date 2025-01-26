@@ -179,7 +179,7 @@ const Appointment = () => {
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => handleDecline(appointment)}
                   >
-                    Decline
+                      <i class="fa-solid fa-x"></i>
                   </button>
                 </div>
 

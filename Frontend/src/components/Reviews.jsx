@@ -85,18 +85,18 @@ const Reviews = () => {
       <div className="max-w-4xl mx-auto bg-transparent p-6 rounded-lg shadow-xl">
         <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">User Reviews</h1>
 
-
-        <div className="submit-review text-white mb-6">
+        <div  className="bg-gray-800 text-yellow-600 bg-opacity-90 p-8 rounded-xl shadow-2xl hover:shadow-[0_0_25px_rgba(50,205,50,0.8)] transition-all transform hover:scale-105 flex flex-col sm:flex-row items-start sm:items-center justify-between">
+        <div className="submit-review text-yellow-600 mb-6">
           <select
             placeholder="Select the Provider"
-            className="w-full p-4 mb-5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-4 mb-5 border-2  border-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             value={reviewForm.provider}
             name="provider"
             onChange={handleChange}
           >
-            <option value="" className='text-black' disabled selected>Select the Provider</option>
+            <option value="" className='text-yellow-600' disabled selected>Select the Provider</option>
             {providers.map((provider) => (
-              <option key={provider.id} value={provider.shop} className='text-black'>{provider.shop}</option>
+              <option key={provider.id} value={provider.shop} className='text-yellow-600'>{provider.shop}</option>
             ))}
           </select>
 
@@ -109,7 +109,8 @@ const Reviews = () => {
             className="w-full p-4 border-2 border-gray-300 rounded-lg mb-4"
 
           />
-          <div className="rating mb-4">
+           </div>
+            <div className="rating mb-4">
             <span className="text-lg">Rating:</span>
             {[1, 2, 3, 4, 5].map((star) => (
               <span
@@ -126,7 +127,7 @@ const Reviews = () => {
           </div>
           <button
             onClick={handleSubmit}
-            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow"
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:shadow-[0_0_20px_rgba(50,205,50,0.8)] transition-shadow hover:scale-105 flex flex-col sm:flex-row items-start sm:items-center justify-between "
           >
             Submit Review
           </button>
@@ -150,7 +151,7 @@ const Reviews = () => {
               >
                 <h3 className="text-2xl font-bold text-green-600">{review.provider}</h3>
                 <p className="text-yellow-500">{review.comment}</p>
-                <div className="rating-display mt-2 text-yellow-500">
+                <div className="rating-display mt-2 text-yellow-600">
                   Rating: {'★'.repeat(review.rating)}{' '}
                   {'☆'.repeat(5 - review.rating)}
                 </div>
