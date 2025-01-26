@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ServiceModal from "./Addservice";
 import DeleteConfirmation from "./DeleteConfirm";
-import axios from "axios";
+import EditService from "./EditService";
 
 const ServiceList = () => {
   const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null); // For editing
+  const [selectedService, setSelectedService] = useState([]); // For editing
   const [showModal, setShowModal] = useState(false);
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
   const [deleteServiceId, setDeleteServiceId] = useState(null);
   const [id, setID] = useState(localStorage.getItem("providerID"));
+  const [showEditPrompt, setShowEditPrompt] = useState(false);
 
   // Handle adding or updating a service
   const handleSaveService = (newService) => {
@@ -33,7 +34,7 @@ const ServiceList = () => {
       console.log("Error: ", error);
     }
   };
-
+  
   // Handle delete
   const confirmDelete = async (id) => {
     try {
@@ -44,6 +45,8 @@ const ServiceList = () => {
         setServices(services.filter(service => service.id !== id));
         setShowDeletePrompt(false);
         setDeleteServiceId(null);
+        alert("Service Deleted Successfully");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error deleting service:", error);
@@ -102,21 +105,21 @@ const ServiceList = () => {
               <tr key={service.id} className="border-t border-neutral-800">
                 <td className="py-3 px-4 text-white">{service.name}</td>
                 <td className="py-3 px-4 text-white">{service.description}</td>
-                <td className="py-3 px-4 text-white">${service.price.toFixed(2)}</td>
+                <td className="py-3 px-4 text-white">₹{service.price.toFixed(2)}</td>
                 <td className="py-3 px-4 text-center">
                   <button
-                    className="px-3 py-1 bg-blue-500 text-black rounded hover:bg-blue-400 transition duration-200 mr-2"
+                    className="px-3 py-1 cursor-pointer bg-blue-800 text-black rounded hover:bg-blue-500 transition duration-200 mr-2"
                     onClick={() => {
                       setSelectedService(service);
-                      setShowModal(true);
+                      setShowEditPrompt(true);
                     }}
                   >
                     <i className="fa-solid fa-pen text-yellow-400"></i>
                   </button>
                   <button
-                    className="px-3 py-1 bg-red-500 text-black rounded hover:bg-red-400 transition duration-200"
+                    className="px-3 py-1 cursor-pointer bg-red-800 text-black rounded hover:bg-red-500 transition duration-200"
                     onClick={() => {
-                      setDeleteServiceId(service.id);
+                      setDeleteServiceId(service._id);
                       setShowDeletePrompt(true);
                     }}
                   >
@@ -133,6 +136,14 @@ const ServiceList = () => {
           <ServiceModal
             service={selectedService}
             onClose={() => setShowModal(false)}
+            onSave={handleSaveService}
+          />
+        )}
+
+        {showEditPrompt && (
+          <EditService
+            service={selectedService}
+            onClose={() =>  setShowEditPrompt(false)}
             onSave={handleSaveService}
           />
         )}

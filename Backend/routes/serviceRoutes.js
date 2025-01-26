@@ -59,13 +59,15 @@ router.delete('/:id', async (req, res) => {
     const deletedService = await Service.findByIdAndDelete(id);
 
     if (!deletedService) {
-      return res.status(404).json({ message: 'Service not found' });
+      return res.status(404).json({ error: 'Service not found' });
     }
 
-    res.status(200).json({ message: 'Service deleted' });
+    res.status(200).json({ message: 'Service deleted successfully' });
   } catch (err) {
+    console.error('Error deleting service:', err.message); // Logging
     res.status(500).json({ error: 'Error deleting service', details: err.message });
   }
 });
+
 
 module.exports = router;
