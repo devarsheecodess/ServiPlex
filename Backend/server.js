@@ -106,6 +106,39 @@ app.post('/provider-login', async (req, res) => {
     res.status(500).json({ message: 'Error logging in provider', error });
   }
 });
+
+// User Details
+app.get('/profile', async (req, res) => {
+  const id = req.query.id;
+  try{
+    const user = await User.find({id: id});
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ message: 'Error fetching user details', error });
+  }
+});
+
+// Update User Details
+app.put('/profile', async (req, res) => {
+  const id = req.query.id;
+  const { email, username, name, password } = req.body;
+  try{
+    let user;
+    if(password.length > 0){
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user = await User.findOneAndUpdate({id: id}, {email, username, name, password: hashedPassword});
+    }
+    else{
+      user = await User.findOneAndUpdate({id: id}, {email, username, name});
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    res.status(500).json({ message: 'Error updating user details', error });
+  }
+});
+
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
