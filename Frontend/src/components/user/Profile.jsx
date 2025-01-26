@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
+  const [id, setId] = useState(localStorage.getItem("userID"));
   const [userDetails, setUserDetails] = useState({
-    email: "johndoe@example.com",
-    username: "johndoe",
-    name: "John Doe",
+    email: "",
+    username: "",
+    name: "",
     password: "",
   });
 
@@ -16,9 +18,37 @@ const Profile = () => {
     }));
   };
 
-  const handleSave = () => {
-    console.log("Updated Details:", userDetails);
-    alert("Profile updated successfully!");
+  const populateUserDetails = async () => {
+    try{
+      console.log("Fetching user details for ID:", id);
+      const response = await axios.get("http://localhost:3000/profile", {params: {id}});
+      const user = response.data[0];
+      setUserDetails({
+        email: user.email,
+        username: user.username,
+        name: user.name,
+        password: "",
+      });
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
+
+  useEffect(() => {
+    populateUserDetails();
+  }, []);
+
+  const handleSave = async () => {
+    try{
+      console.log(userDetails);
+      const response = await axios.put("http://localhost:3000/profile", userDetails, {params: {id}});
+      if (response.status === 200) {
+        alert("Details updated successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error updating user details');
+    }
   };
 
   return (

@@ -1,19 +1,28 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const Payment = require('../Models/paymentModel');
 
-app.get('/payments', (req, res) => {
-    res.status(200).json(payments);
+router.get('/', async (req, res) => {
+    const id = req.query.customerId;
+    const status = req.query.status;
+    try{
+      const payments = await Payment.find({customerId: id, status: status});
+      res.status(200).json(payments);
+    } catch(error){
+        console.error('Error fetching payments:', error);
+        res.status(500).json({ message: 'Error fetching payments', error });
+    }
   });
   
-  app.post('/payments', (req, res) => {
+  router.post('/payments', (req, res) => {
     const { providerId, amount, paymentMethod, status } = req.body;
     const newPayment = { id: Date.now(), providerId, amount, paymentMethod, status: status || 'pending' };
     payments.push(newPayment);
     res.status(201).json(newPayment);
   });
   
-  app.put('/payments/:id', (req, res) => {
+  router.put('/payments/:id', (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
     const payment = payments.find(p => p.id === parseInt(id));

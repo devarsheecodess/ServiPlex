@@ -78,7 +78,7 @@ app.post('/user-login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    res.status(200).json({ message: 'Login successful', success: true, id: user.id });
+    res.status(200).json({ message: 'Login successful', success: true, id: user.id , name: user.name});
   } catch (error) {
     console.error('Error logging in user:', error);
     res.status(500).json({ message: 'Error logging in user', error });
@@ -106,10 +106,45 @@ app.post('/provider-login', async (req, res) => {
     res.status(500).json({ message: 'Error logging in provider', error });
   }
 });
+
+// User Details
+app.get('/profile', async (req, res) => {
+  const id = req.query.id;
+  try{
+    const user = await User.find({id: id});
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ message: 'Error fetching user details', error });
+  }
+});
+
+// Update User Details
+app.put('/profile', async (req, res) => {
+  const id = req.query.id;
+  const { email, username, name, password } = req.body;
+  try{
+    let user;
+    if(password.length > 0){
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user = await User.findOneAndUpdate({id: id}, {email, username, name, password: hashedPassword});
+    }
+    else{
+      user = await User.findOneAndUpdate({id: id}, {email, username, name});
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    res.status(500).json({ message: 'Error updating user details', error });
+  }
+});
+
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+
+const Service = require('./Models/serviceModel')
 
 
 app.use('/appointments', appointmentRoutes);
@@ -123,6 +158,30 @@ const userAppointments = require('./routes/userAppointments');
 app.use('/providers', services); // Correct usage
 app.use('/userAppointments', userAppointments); // Correct usage
 
+// Add a new service
+app.post('/addServices', async (req, res) => {
+  const { serviceID, providerID, name, description, price, offers } = req.body;
 
+  // Validate required fields
+  if (!serviceID || !name || !description || !price) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const newService = new Service({
+    serviceID,
+    providerID,
+    name,
+    description,
+    price,
+    offers,
+  });
+
+  try {
+    const savedService = await newService.save();
+    res.status(201).json(savedService);
+  } catch (err) {
+    res.status(500).json({ error: 'Error saving service to the database', details: err.message });
+  }
+});
 
 app.listen(port, () => {`Server running on port ${port}`});

@@ -20,6 +20,7 @@ const Login = () => {
 
       if (response1 && response1.status === 200) {
         localStorage.setItem("userID", response1.data.id);
+        localStorage.setItem("name", response1.data.name);
         alert("Login successful");
         window.location.href = "/user-home";
       } else if (response2 && response2.status === 200) {
