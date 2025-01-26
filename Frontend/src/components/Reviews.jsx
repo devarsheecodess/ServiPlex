@@ -83,7 +83,7 @@ const Reviews = () => {
   return (
     <div className="absolute w-full top-0 left-0 h-full bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] p-6">
       <div className="max-w-4xl mx-auto bg-transparent p-6 rounded-lg shadow-xl">
-        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">User Reviews</h1>
+        <h1 className="text-4xl font-extrabold text-green-600 mb-8 text-center">Reviews</h1>
 
 
         <div className="submit-review text-white mb-6">
@@ -132,7 +132,7 @@ const Reviews = () => {
           </button>
         </div>
 
-        {/* {/* <h2 className="text-2xl font-semibold text-green-600 mb-2">All Reviews</h2> */}
+        <h2 className="text-2xl font-semibold text-green-600 mb-2">Your Reviews</h2>
         <Swiper
           spaceBetween={30}
           slidesPerView={1}
