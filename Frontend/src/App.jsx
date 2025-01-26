@@ -13,6 +13,7 @@ import Recent from "./components/user/Recent";
 import Profile from './components/user/Profile';
 import Reviews from './components/Reviews';
 import Replies from './components/Replies';
+import ProviderPaymentSetup from './components/provider/Payments';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Services />
+      </div>
+    ),
+  },
+  {
+    path: "/provider-payments",
+    element: (
+      <div>
+        <ProviderPaymentSetup/>
       </div>
     ),
   },

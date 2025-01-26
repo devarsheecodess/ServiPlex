@@ -107,7 +107,7 @@ app.post('/provider-login', async (req, res) => {
   }
 });
 const appointmentRoutes = require('./routes/appointmentRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+const paymentRoutes = require('./routes/providerpay');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 
