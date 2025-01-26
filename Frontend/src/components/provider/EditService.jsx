@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const ServiceModal = ({ service, onClose, onSave }) => {
@@ -21,31 +21,47 @@ const ServiceModal = ({ service, onClose, onSave }) => {
     }
   };
 
+  const populateForm = () => {
+    if (service) {
+      setFormData({
+        serviceID: service.serviceID,
+        providerID: service.providerID,
+        name: service.name,
+        description: service.description,
+        price: service.price,
+        offers: service.offers,
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("FormData:", formData);
-      const response = await axios.post(
-        "http://localhost:3000/addServices",
+      const response = await axios.put(
+        `http://localhost:3000/services/${service._id}`,
         formData
       );
 
-      if (response.status === 201) {
-        alert("Service added successfully!");
+      if (response.status === 200) {
+        alert("Service updated successfully!");
         console.log("Response:", response.data);
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error adding service:", error);
-      alert("Failed to add service. Please try again.");
+      console.error("Error updating service:", error);
+      alert("Failed to update service. Please try again.");
     }
   };
+
+  useEffect(() => {
+    populateForm();
+  }, [service]);
 
   return (
     <div className="absolute top-0 left-0 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex items-center justify-center p-8">
       <div className="backdrop-blur-xl bg-[rgba(0,0,0,0.6)] border-4 border-blue-500 p-6 rounded-2xl w-96 shadow-[0_0_15px_5px_rgba(50,205,50,0.6)]">
         <h2 className="text-3xl font-extrabold text-blue-400 mb-6 text-center tracking-widest">
-          {"ADD SERVICE"}
+          {"EDIT SERVICE"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

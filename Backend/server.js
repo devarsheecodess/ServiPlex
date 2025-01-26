@@ -111,6 +111,8 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 
+const Service = require('./Models/serviceModel')
+
 
 app.use('/appointments', appointmentRoutes);
 app.use('/payments', paymentRoutes);
@@ -123,6 +125,30 @@ const userAppointments = require('./routes/userAppointments');
 app.use('/providers', services); // Correct usage
 app.use('/userAppointments', userAppointments); // Correct usage
 
+// Add a new service
+app.post('/addServices', async (req, res) => {
+  const { serviceID, providerID, name, description, price, offers } = req.body;
 
+  // Validate required fields
+  if (!serviceID || !name || !description || !price) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const newService = new Service({
+    serviceID,
+    providerID,
+    name,
+    description,
+    price,
+    offers,
+  });
+
+  try {
+    const savedService = await newService.save();
+    res.status(201).json(savedService);
+  } catch (err) {
+    res.status(500).json({ error: 'Error saving service to the database', details: err.message });
+  }
+});
 
 app.listen(port, () => {`Server running on port ${port}`});
