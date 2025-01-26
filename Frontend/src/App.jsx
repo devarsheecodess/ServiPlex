@@ -15,6 +15,7 @@ import Reviews from './components/Reviews';
 import Replies from './components/Replies';
 import ProviderPaymentSetup from './components/provider/Payments';
 import Payments from './components/user/Payments';
+import ServiceDiscovery from './components/provider/Search_Discovery/ServiceDiscovery';
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,14 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Services />
+      </div>
+    ),
+  },
+  {
+    path:"service-discovery",
+    element: (
+      <div>
+        <ServiceDiscovery/>
       </div>
     ),
   },

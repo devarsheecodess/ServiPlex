@@ -3,14 +3,29 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Service = require('../Models/serviceModel');
 
+// Middleware to handle JSON parsing errors
+router.use(express.json());
+router.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Invalid JSON' });
+  }
+  next();
+});
+
 // Get all services
 router.get('/', async (req, res) => {
-  const { id } = req.query;
   try {
-    const services = await Service.find({providerID: id}); // Retrieve all services from the database
-    res.status(200).json(services);
-  } catch (err) {
-    res.status(500).json({ error: 'Error fetching services from the database', details: err.message });
+      const { name, price, offers } = req.query;
+      const filter = {};
+
+      if (name) filter.name = { $regex: name, $options: 'i' }; // Case-insensitive search
+      if (price) filter.price = { $lte: Number(price) }; // Services less than or equal to price
+      if (offers) filter.offers = { $regex: offers, $options: 'i' }; // Case-insensitive offers search
+
+      const services = await Service.find(filter).sort({ createdAt: -1 });
+      res.status(200).json(services);
+  } catch (error) {
+      res.status(500).json({ message: 'Server Error', error });
   }
 });
 

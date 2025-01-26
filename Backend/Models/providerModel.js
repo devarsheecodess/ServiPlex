@@ -10,6 +10,8 @@ const providerSchema = new mongoose.Schema({
     },
     username: {
         type: String,
+        required: true,
+        unique: true,
     },
     owner: {
         type: String,
@@ -29,11 +31,17 @@ const providerSchema = new mongoose.Schema({
     address: {
         type: String,
     },
+    coordinates: {
+        type: {
+          lat: Number, // Latitude
+          lng: Number, // Longitude
+        },
+        required: false,
+      },
     password: {
         type: String,
+        required: true,
     }
 });
 
-const Provider = mongoose.model('Provider', providerSchema, 'providers');
-
-module.exports = Provider;
+module.exports = mongoose.model('Provider', providerSchema);

@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
 const port = 3000;
+const axios = require('axios');
 
 // Middleware
 app.use(cors());
@@ -49,18 +50,33 @@ app.post('/user-signup', async (req, res) => {
 
 app.post('/provider-signup', async (req, res) => {
   try {
-    const { password, ...otherData } = req.body;
+    const { password, address, ...otherData } = req.body;
 
+    // Geocode the address
+    const coordinates = await getCoordinates(address);
+
+    // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const provider = new Provider({ ...otherData, password: hashedPassword });
+    // Create the provider
+    const provider = new Provider({
+      ...otherData,
+      password: hashedPassword,
+      address,
+      coordinates, // Adding geocoded coordinates
+    });
+
     const savedProvider = await provider.save();
 
-    res.status(201).json({ message: 'Provider created successfully', id: savedProvider.id });
+    res.status(201).json({
+      message: 'Provider created successfully',
+      id: savedProvider.id,
+      location: savedProvider.coordinates, // Optionally return the coordinates
+    });
   } catch (error) {
     console.error('Error creating provider:', error);
-    res.status(500).json({ message: 'Error creating provider', error });
+    res.status(500).json({ message: 'Error creating provider', error: error.message });
   }
 });
 
@@ -154,11 +170,28 @@ app.use('/reviews', reviewRoutes);
 app.use('/services', serviceRoutes);
 app.use('/providerPay',providerPay);
 
+
 // User routes
 const services = require('./routes/Services');
 const userAppointments = require('./routes/userAppointments');
 app.use('/providers', services); // Correct usage
 app.use('/userAppointments', userAppointments); // Correct usage
+
+//Service Discovery Function
+
+
+async function getCoordinates(address) {
+    const API_KEY = 'AIzaSyCATvyN6vdGvwzNWxtUNoxbKKp_oSLl1PE'; // Replace with your API key
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
+    const response = await axios.get(url);
+
+    if (response.data.results.length > 0) {
+        const { lat, lng } = response.data.results[0].geometry.location;
+        return { type: "Point", coordinates: [lng, lat] }; // Store as GeoJSON Point
+    } else {
+        throw new Error('Unable to fetch coordinates for the given address.');
+    }
+}
 
 // Add a new service
 app.post('/addServices', async (req, res) => {
@@ -186,4 +219,6 @@ app.post('/addServices', async (req, res) => {
   }
 });
 
-app.listen(port, () => {`Server running on port ${port}`});
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

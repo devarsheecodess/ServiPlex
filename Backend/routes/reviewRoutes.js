@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Review = require('./Models/reviewModel'); // Import the Review model
+const Review = require('../Models/reviewModel'); // Import the Review model
 
 // 1. Get all reviews
 router.get('/', async (req, res) => {
