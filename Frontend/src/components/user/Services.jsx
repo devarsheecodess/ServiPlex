@@ -45,7 +45,10 @@ const Services = () => {
 
   const bookAppointment = async () => {
     try {
-      console.log(selectedService);
+      if (order.length === 0) {
+        alert("Please add services to your order.");
+        return;
+      }
       const appointmentDetails = {
         providerId: selectedService.id,
         customerId: localStorage.getItem("userID"),
@@ -54,7 +57,7 @@ const Services = () => {
         services: order,
         price: order.reduce((acc, item) => acc + item.price, 0),
         date: new Date(),
-        status: "pending",  
+        status: "pending",
       };
       console.log(appointmentDetails);
       const response = await axios.post("http://localhost:3000/appointments", appointmentDetails);
@@ -169,6 +172,13 @@ const Services = () => {
                     </button>
                   </div>
                 ))}
+                {
+                  subServices.length === 0 && (
+                    <div className="flex justify-center col-span-2 items-center w-full h-48">
+                      <p className="text-gray-300 text-center">No services available.</p>
+                    </div>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -191,6 +201,13 @@ const Services = () => {
                     <span>₹ {item.price}</span>
                   </li>
                 ))}
+                {
+                  order.length === 0 && (
+                    <div className="flex justify-center items-center w-full h-48">
+                      <p className="text-gray-300 text-center">No services added to the order.</p>
+                    </div>
+                  )
+                }
               </ul>
               <button
                 className="w-full bg-green-500 text-black py-3 rounded-lg hover:bg-green-400 transition-transform duration-300 transform hover:scale-105"
