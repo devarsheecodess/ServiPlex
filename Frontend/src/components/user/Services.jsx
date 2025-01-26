@@ -96,7 +96,13 @@ const Services = () => {
 
   return (
     <div className="absolute top-0 left-0 w-full min-h-screen bg-[radial-gradient(125%_125%_at_50%_10%,#000_50%,#32cd32_100%)] flex flex-col items-center justify-center p-4">
-      <div className="max-w-7xl mx-auto text-center">
+  <button
+    className="absolute top-4 right-4 px-4 py-2 bg-black backdrop-blur-lg rounded-lg "
+    onClick={() => window.location.href = 'service-discovery'}
+  >
+    <i class="fa-solid fa-magnifying-glass text-red-600 text-3xl"></i>
+  </button>
+
         <h1 className="text-4xl font-bold text-white mb-10 tracking-wide">
           Discover Our <span className="text-green-400">Services</span>
         </h1>
@@ -267,7 +273,6 @@ const Services = () => {
         )}
 
       </div>
-    </div>
   );
 };
 
