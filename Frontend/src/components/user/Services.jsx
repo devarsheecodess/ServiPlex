@@ -13,7 +13,7 @@ const Services = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:3000/providers");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/providers`);
         const data = await response.json();
         setServices(data);
       } catch (error) {
@@ -26,8 +26,7 @@ const Services = () => {
 
   const fetchSubServices = async (id) => {
     try {
-      console.log("ID: ", id);
-      const response = await axios.get(`http://localhost:3000/services`, { params: { id } });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/services`, { params: { id } });
       setSubServices(response.data); // Updated from response.data to data
     } catch (error) {
       console.log("Error: ", error);
@@ -61,7 +60,7 @@ const Services = () => {
         status: "pending",
       };
       console.log(appointmentDetails);
-      const response = await axios.post("http://localhost:3000/appointments", appointmentDetails);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/appointments`, appointmentDetails);
       if (response.status === 201) {
         alert("Appointment booked successfully!");
         setShowBookingPopup(false);
@@ -77,7 +76,7 @@ const Services = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/reviews/name`, { params: { name: selectedService.shop } });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/reviews/name`, { params: { name: selectedService.shop } });
       setReviews(response.data);
     } catch (error) {
       console.log("Error: ", error);
@@ -217,6 +216,7 @@ const Services = () => {
                     <div className="p-6">
                       <h3 className="text-xl font-semibold text-white">{subService.name}</h3>
                       <p className="text-gray-300 mb-4">{subService.description}</p>
+                      <p className="text-gray-300 mb-4">Rs: {subService.price}/-</p>
                       <button
                         className="w-full bg-green-500 text-black py-2 rounded-lg hover:bg-green-400 transition-transform duration-300 transform hover:scale-105"
                         onClick={() => addToOrder(subService)}

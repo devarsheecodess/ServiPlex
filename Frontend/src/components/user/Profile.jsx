@@ -19,9 +19,9 @@ const Profile = () => {
   };
 
   const populateUserDetails = async () => {
-    try{
+    try {
       console.log("Fetching user details for ID:", id);
-      const response = await axios.get("http://localhost:3000/profile", {params: {id}});
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile`, { params: { id } });
       const user = response.data[0];
       setUserDetails({
         email: user.email,
@@ -39,9 +39,9 @@ const Profile = () => {
   }, []);
 
   const handleSave = async () => {
-    try{
+    try {
       console.log(userDetails);
-      const response = await axios.put("http://localhost:3000/profile", userDetails, {params: {id}});
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/profile`, userDetails, { params: { id } });
       if (response.status === 200) {
         alert("Details updated successfully");
         window.location.reload();

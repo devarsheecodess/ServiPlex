@@ -38,7 +38,7 @@ const ServiceModal = ({ service, onClose, onSave }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3000/services/${service._id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/services/${service._id}`,
         formData
       );
 

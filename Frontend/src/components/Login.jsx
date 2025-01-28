@@ -10,10 +10,10 @@ const Login = () => {
     try {
       let response1, response2;
       if (role === "user") {
-        response1 = await axios.post("http://localhost:3000/user-login", form);
+        response1 = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user-login`, form);
       } else if (role === "provider") {
         response2 = await axios.post(
-          "http://localhost:3000/provider-login",
+          "${import.meta.env.VITE_BACKEND_URL/provider-login",
           form
         );
       }
@@ -107,7 +107,7 @@ const Login = () => {
             className="flex items-center justify-center w-full border rounded-lg px-4 py-2 hover:bg-gray-100 transition duration-200 text font-semibold text-blue-600 hover:text-black"
             onClick={() => console.log("Google Login")}
           >
-           <i className="fa-brands fa-google mr-2 text-yellow-600 font-semibold hover:text-black"></i>
+            <i className="fa-brands fa-google mr-2 text-yellow-600 font-semibold hover:text-black"></i>
             Sign in with Google
           </button>
         </div>

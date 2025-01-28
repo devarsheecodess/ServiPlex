@@ -18,7 +18,7 @@ const Appointment = () => {
   // Fetch appointments from backend
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/appointments", { params: { providerId, status: ["pending", "in-progress"] } });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/appointments`, { params: { providerId, status: ["pending", "in-progress"] } });
       setAppointments(response.data);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -33,7 +33,7 @@ const Appointment = () => {
   const handleAccept = (appointment) => {
     const updatedAppointment = { ...appointment, status: "Accepted" };
 
-    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/appointments/${appointment._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const Appointment = () => {
   const handleDecline = (appointment) => {
     const updatedAppointment = { ...appointment, status: "Declined" };
 
-    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/appointments/${appointment._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const Appointment = () => {
 
   // Update the progress of the appointment
   const handleUpdateStatus = (appointment) => {
-    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/appointments/${appointment._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const Appointment = () => {
   // Update payment status
   const handleUpdatePaymentStatus = (appointment) => {
     const updatedAppointment = { ...appointment, paymentStatus };
-    fetch(`http://localhost:3000/appointments/${appointment._id}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/appointments/${appointment._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

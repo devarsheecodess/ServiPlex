@@ -9,10 +9,10 @@ const Recent = () => {
     // Simulate fetching data from an API
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/userAppointments", {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/userAppointments`, {
           params: {
             customerId: userID,
-            status: 'Completed' 
+            status: 'Completed'
           }
         });
         setAppointments(response.data);
@@ -20,7 +20,7 @@ const Recent = () => {
         console.error("Error fetching appointments:", error);
       }
     };
-    
+
     fetchData();
   }, []);
 

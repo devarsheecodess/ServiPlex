@@ -10,7 +10,7 @@ const ServiceDiscovery = () => {
     // Fetch services based on filters
     const fetchServices = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/services', { params: filters });
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/services`, { params: filters });
             setServices(response.data);
         } catch (error) {
             console.error('Error fetching services:', error);

@@ -31,13 +31,13 @@ const providerSchema = new mongoose.Schema({
     address: {
         type: String,
     },
-    coordinates: {
-        type: {
-          lat: Number, // Latitude
-          lng: Number, // Longitude
-        },
-        required: false,
-      },
+    // coordinates: {
+    //     type: {
+    //       lat: Number, // Latitude
+    //       lng: Number, // Longitude
+    //     },
+    //     required: false,
+    //   },
     password: {
         type: String,
         required: true,

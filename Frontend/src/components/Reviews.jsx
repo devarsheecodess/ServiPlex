@@ -23,7 +23,7 @@ const Reviews = () => {
 
   const fetchProviders = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/provider', { params: { id: id } });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/provider`, { params: { id: id } });
       setProviders(response.data);
     } catch (error) {
       console.error('Error fetching providers:', error);
@@ -47,7 +47,7 @@ const Reviews = () => {
       // Log the updated review form
       console.log(updatedReviewForm);
 
-      const response = await axios.post('http://localhost:3000/reviews', updatedReviewForm);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/reviews`, updatedReviewForm);
       if (response.status === 201) {
         alert('Review submitted successfully');
         setReviewForm({
@@ -68,7 +68,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/reviews', { params: { id: id } });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/reviews`, { params: { id: id } });
       setReviews(response.data);
     } catch {
       console.error('Error fetching reviews:', error);

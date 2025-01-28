@@ -9,7 +9,7 @@ const Reviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/reviews/name', {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/reviews/name`, {
         params: { name: localStorage.getItem('provider') },
       });
       setReviews(response.data);
@@ -23,7 +23,7 @@ const Reviews = () => {
   const sendReply = async (id) => {
     try {
       const response = await axios.put(
-        'http://localhost:3000/reviews', // No `id` in the URL
+        `${import.meta.env.VITE_BACKEND_URL}/reviews`, // No `id` in the URL
         { id: id, providerResponse: reply } // Pass `id` and `providerResponse` in the request body
       );
       console.log('Response:', response.data);
@@ -32,7 +32,7 @@ const Reviews = () => {
       console.error('Error sending reply:', error);
       alert('An error occurred while sending reply');
     }
-  };  
+  };
 
   useEffect(() => {
     fetchReviews();
@@ -83,7 +83,7 @@ const Reviews = () => {
                     placeholder="Reply to this review"
                     className="w-full p-3 border-2 border-gray-300 bg-gray-300 mt-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent shadow-md"
                   />
-                  <button onClick={()=>sendReply(review.id)} className="absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full outline-0 mt-3 text-black p-4 cursor-pointer transition-all duration-200">
+                  <button onClick={() => sendReply(review.id)} className="absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full outline-0 mt-3 text-black p-4 cursor-pointer transition-all duration-200">
                     <i className="fa-solid fa-paper-plane"></i>
                   </button>
                 </div>

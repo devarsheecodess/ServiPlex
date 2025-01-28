@@ -13,7 +13,7 @@ const UserForm = () => {
     e.preventDefault();
     try {
       console.log(form);
-      const response = await axios.post("http://localhost:3000/user-signup", form);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user-signup`, form);
       console.log(response);
       if (response.status === 201) {
         alert("User registered successfully!");
@@ -102,7 +102,7 @@ const ProviderForm = () => {
     e.preventDefault();
     try {
       console.log(form);
-      const response = await axios.post("http://localhost:3000/provider-signup", form);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/provider-signup`, form);
       if (response.status === 201) {
         alert("Provider registered successfully!");
         setForm({

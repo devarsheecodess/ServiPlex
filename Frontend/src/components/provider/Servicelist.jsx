@@ -27,7 +27,7 @@ const ServiceList = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/services?id=${id}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/services?id=${id}`);
       const data = await response.json();
       setServices(data);
     } catch (error) {
@@ -38,7 +38,7 @@ const ServiceList = () => {
   // Handle delete
   const confirmDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/services/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/services/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {

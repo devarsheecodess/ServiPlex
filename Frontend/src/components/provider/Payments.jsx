@@ -30,7 +30,7 @@ const ProviderPaymentSetup = () => {
     e.preventDefault();
     console.log("Submitting form data:", formData); // Log form data for debugging
     try {
-      const response = await axios.post("http://localhost:3000/providerPay", formData);
+      const response = await axios.post("${import.meta.env.VITE_BACKEND_URL/providerPay", formData);
       setResponseMessage(response.data.message);
       setFormData({
         providerId: formData.providerId,

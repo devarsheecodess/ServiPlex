@@ -9,7 +9,7 @@ const Payments = () => {
     const fetchPayments = async () => {
         try {
             console.log('Fetching payments for customer:', id);
-            const response = await axios.get('http://localhost:3000/userAppointments', {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/userAppointments`, {
                 params: {
                     customerId: id,
                     status: 'completed',
