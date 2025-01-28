@@ -26,9 +26,9 @@ const Services = () => {
 
   const fetchSubServices = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/services?id=${id}`);
-      const data = await response.json(); // Corrected to handle JSON response
-      setSubServices(data); // Updated from response.data to data
+      console.log("ID: ", id);
+      const response = await axios.get(`http://localhost:3000/services`, { params: { id } });
+      setSubServices(response.data); // Updated from response.data to data
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -224,12 +224,6 @@ const Services = () => {
                         Add to Order
                       </button>
                     </div>
-                    <button
-                      className="bg-green-500 cursor-pointer text-black py-2 px-4 rounded-lg hover:bg-green-400 transition-transform duration-300 transform hover:scale-105"
-                      onClick={() => addToOrder(service)}
-                    >
-                      <i className="fa-solid fa-plus text-black"></i>
-                    </button>
                   </div>
                 ))}
               </div>

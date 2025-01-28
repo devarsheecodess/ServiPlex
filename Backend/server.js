@@ -192,7 +192,7 @@ app.use('/userAppointments', userAppointments); // Correct usage
 
 
 async function getCoordinates(address) {
-    const API_KEY = 'AIzaSyCATvyN6vdGvwzNWxtUNoxbKKp_oSLl1PE'; // Replace with your API key
+    const API_KEY = process.env.GOOGLE_API_KEY; // Replace with your API key
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
     const response = await axios.get(url);
 
