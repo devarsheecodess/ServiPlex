@@ -13,7 +13,7 @@ const Login = () => {
         response1 = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user-login`, form);
       } else if (role === "provider") {
         response2 = await axios.post(
-          "${import.meta.env.VITE_BACKEND_URL/provider-login",
+          `${import.meta.env.VITE_BACKEND_URL}/provider-login`,
           form
         );
       }
