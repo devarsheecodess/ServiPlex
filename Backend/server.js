@@ -52,16 +52,31 @@ app.post('/provider-signup', async (req, res) => {
   try {
     const { password, ...otherData } = req.body;
 
+    // Geocode the address
+    // const coordinates = await getCoordinates(address);
+
+    // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const provider = new Provider({ ...otherData, password: hashedPassword });
+    // Create the provider
+    const provider = new Provider({
+      ...otherData,
+      password: hashedPassword
+      // address,
+      // coordinates, // Adding geocoded coordinates
+    });
+
     const savedProvider = await provider.save();
 
-    res.status(201).json({ message: 'Provider created successfully', id: savedProvider.id });
+    res.status(201).json({
+      message: 'Provider created successfully',
+      id: savedProvider.id,
+      // location: savedProvider.coordinates, // Optionally return the coordinates
+    });
   } catch (error) {
     console.error('Error creating provider:', error);
-    res.status(500).json({ message: 'Error creating provider', error });
+    res.status(500).json({ message: 'Error creating provider', error: error.message });
   }
 });
 

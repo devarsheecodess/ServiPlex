@@ -102,7 +102,7 @@ const ProviderForm = () => {
     e.preventDefault();
     try {
       console.log(form);
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/provider-signup`, form);
+      const response = await axios.post(`http://localhost:3000/provider-signup`, form);
       if (response.status === 201) {
         alert("Provider registered successfully!");
         setForm({
