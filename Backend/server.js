@@ -206,23 +206,21 @@ async function getCoordinates(address) {
 
 // Add a new service
 app.post('/addServices', async (req, res) => {
-  const { serviceID, providerID, name, description, price, offers } = req.body;
-
-  // Validate required fields
-  if (!serviceID || !name || !description || !price) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  const newService = new Service({
-    serviceID,
-    providerID,
-    name,
-    description,
-    price,
-    offers,
-  });
-
+  const { providerID, name, description, price, offers } = req.body;
+  
   try {
+    // Validate required fields
+    if (!name || !description || !price) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+  
+    const newService = new Service({
+      providerID,
+      name,
+      description,
+      price,
+      offers,
+    });
     const savedService = await newService.save();
     res.status(201).json(savedService);
   } catch (err) {

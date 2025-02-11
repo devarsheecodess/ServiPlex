@@ -4,11 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 
 const ServiceModal = ({ service, onClose, onSave }) => {
   const [formData, setFormData] = useState({
-    serviceID: uuidv4(),
     providerID: localStorage.getItem("providerID") || "",
     name: "",
     description: "",
-    price: "",
+    price: 0,
     offers: "",
   });
 
@@ -26,7 +25,7 @@ const ServiceModal = ({ service, onClose, onSave }) => {
     try {
       console.log("FormData:", formData);
       const response = await axios.post(
-        "${import.meta.env.VITE_BACKEND_URL/addServices",
+        `http://localhost:3000/addServices`,
         formData
       );
 
