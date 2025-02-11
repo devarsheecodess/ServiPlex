@@ -25,7 +25,7 @@ const ServiceModal = ({ service, onClose, onSave }) => {
     try {
       console.log("FormData:", formData);
       const response = await axios.post(
-        `http://localhost:3000/addServices`,
+        `${import.meta.env.VITE_BACKEND_URL}/addServices`,
         formData
       );
 
