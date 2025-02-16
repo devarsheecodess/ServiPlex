@@ -14,15 +14,29 @@ router.use((err, req, res, next) => {
 
 // Get all services
 router.get('/', async (req, res) => {
-  const { id } = req.query;
   try {
-    const services = await Service.find({providerID: id}); // Retrieve all services from the database
+    const { id, name, price, offers } = req.query;
+    let query = {};
+
+    // Apply filters only if values are provided
+    if (id) query.providerID = id;
+    if (name) query.name = new RegExp(name, 'i'); // Case-insensitive search
+    if (offers) query.offers = new RegExp(offers, 'i'); // Case-insensitive search
+    if (price) {
+      const parsedPrice = parseFloat(price);
+      if (!isNaN(parsedPrice)) {
+        query.price = { $lte: parsedPrice }; // Filter services with price ≤ given value
+      }
+    }
+
+    const services = await Service.find(query).lean(); // Optimize performance by returning plain objects
+
     res.status(200).json(services);
   } catch (err) {
+    console.error('Error fetching services:', err);
     res.status(500).json({ error: 'Error fetching services from the database', details: err.message });
   }
 });
-
 // Update a service
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
